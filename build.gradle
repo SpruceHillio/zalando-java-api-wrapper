@@ -1,0 +1,108 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'http://repo.spring.io/plugins-release' }
+    }
+    dependencies {
+        classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
+    }
+}
+
+configure(allprojects) {
+    apply plugin: 'propdeps'
+    apply plugin: 'propdeps-maven'
+    apply plugin: 'propdeps-idea'
+    apply plugin: 'propdeps-eclipse'
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+group = 'io.sprucehill'
+archivesBaseName = 'zalando-java-api-wrapper'
+version = '0.1.0'
+description = 'A Java API client for the Zalando REST API'
+
+processResources {
+    expand(project.properties)
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.12'
+    compile 'org.apache.httpcomponents:httpclient:4.5'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.6.1'
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.5'
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'Zalando Java API Wrapper'
+                packaging 'jar'
+                description 'A Java API wrapper for the Zalando public API'
+                url 'https://github.com/SpruceHillio/zalando-java-api-wrapper'
+
+                scm {
+                    connection 'scm:git:https://github.com/SpruceHillio/zalando-java-api-wrapper.git'
+                    developerConnection 'scm:git:git://github.com/SpruceHillio/zalando-java-api-wrapper.git'
+                    url 'https://github.com/SpruceHillio/zalando-java-api-wrapper.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'duergner'
+                        name 'Michael Duergner'
+                        email 'michael@sprucehill.io'
+                        organization 'SpruceHill.io GmbH'
+                    }
+                }
+            }
+        }
+    }
+}
