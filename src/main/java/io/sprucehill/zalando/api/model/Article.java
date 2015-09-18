@@ -26,6 +26,14 @@ public class Article extends Base {
 
         @JsonProperty
         List<String> values;
+
+        public String getName() {
+            return name;
+        }
+
+        public List<String> getValues() {
+            return values;
+        }
     }
 
     @JsonProperty

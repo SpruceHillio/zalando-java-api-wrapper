@@ -19,6 +19,12 @@ public class Unit extends Base {
     @JsonProperty
     Integer stock;
 
+    @JsonProperty
+    Price price;
+
+    @JsonProperty
+    Price originalPrice;
+
     public String getId() {
         return id;
     }
@@ -33,5 +39,13 @@ public class Unit extends Base {
 
     public Integer getStock() {
         return stock;
+    }
+
+    public Price getPrice() {
+        return price;
+    }
+
+    public Price getOriginalPrice() {
+        return originalPrice;
     }
 }
