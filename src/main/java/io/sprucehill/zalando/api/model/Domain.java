@@ -5,20 +5,20 @@ package io.sprucehill.zalando.api.model;
  */
 public enum Domain {
     DE("de-DE","www.zalando.de",19,Currency.EUR,SizeChart.EU),
-    DK("de-DE","www.zalando.dk",25,Currency.DKK,SizeChart.EU),
-    AT("de-DE","www.zalando.at",20,Currency.EUR,SizeChart.EU),
-    CH("de-DE","www.zalando.ch",19,Currency.CHF,SizeChart.EU),
-    GB("de-DE","www.zalando.co.uk",20,Currency.GBP,SizeChart.UK),
-    ES("de-DE","www.zalando.es",21,Currency.EUR,SizeChart.FR),
-    FI("de-DE","www.zalando.fi",24,Currency.EUR,SizeChart.EU),
-    BE("de-DE","www.zalando.be",21,Currency.EUR,SizeChart.EU),
-    FR("de-DE","www.zalando.fr",20,Currency.EUR,SizeChart.FR),
-    IT("de-DE","www.zalando.it",22,Currency.EUR,SizeChart.IT),
-    NL("de-DE","www.zalando.nl",21,Currency.EUR,SizeChart.EU),
-    NO("de-DE","www.zalando.no",25,Currency.NOK,SizeChart.EU),
-    PL("de-DE","www.zalando.pl",23,Currency.EUR,SizeChart.EU),
-    SE("de-DE","www.zalando.se",25,Currency.SEK,SizeChart.EU),
-    LU("de-DE","www.zalando.lu",17,Currency.EUR,SizeChart.EU);
+    DK("da-DK","www.zalando.dk",25,Currency.DKK,SizeChart.EU),
+    AT("de-AT","www.zalando.at",20,Currency.EUR,SizeChart.EU),
+    CH("de-CH","www.zalando.ch",19,Currency.CHF,SizeChart.EU),
+    GB("en-GB","www.zalando.co.uk",20,Currency.GBP,SizeChart.UK),
+    ES("es-ES","www.zalando.es",21,Currency.EUR,SizeChart.FR),
+    FI("fi-FI","www.zalando.fi",24,Currency.EUR,SizeChart.EU),
+    BE("fr-BE","www.zalando.be",21,Currency.EUR,SizeChart.EU),
+    FR("fr-FR","www.zalando.fr",20,Currency.EUR,SizeChart.FR),
+    IT("it-IT","www.zalando.it",22,Currency.EUR,SizeChart.IT),
+    NL("nl-NL","www.zalando.nl",21,Currency.EUR,SizeChart.EU),
+    NO("no-NO","www.zalando.no",25,Currency.NOK,SizeChart.EU),
+    PL("pl-PL","www.zalando.pl",23,Currency.EUR,SizeChart.EU),
+    SE("se-SE","www.zalando.se",25,Currency.SEK,SizeChart.EU),
+    LU("fr-LU","www.zalando.lu",17,Currency.EUR,SizeChart.EU);
 
     private String locale;
 
