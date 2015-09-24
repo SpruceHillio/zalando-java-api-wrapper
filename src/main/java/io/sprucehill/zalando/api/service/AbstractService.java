@@ -133,7 +133,7 @@ public abstract class AbstractService {
         if (!path.startsWith("/")) {
             path = "/" + path;
         }
-        return path;
+        return apiBase + path;
     }
 
     /**
