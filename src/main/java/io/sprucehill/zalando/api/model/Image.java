@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Image extends Base {
 
     public enum Type {
-        STYLE,NON_MODEL,MODEL
+        STYLE,NON_MODEL,MODEL,UNSPECIFIED
     }
 
     @JsonProperty
