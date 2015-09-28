@@ -138,16 +138,13 @@ public abstract class AbstractService {
 
     /**
      * Enrich a HttpRequest with some default stuff;
-     * the current implementation only adds the default domain if present.
+     * the current implementation does nothing here
      *
      * @param request    The request to enrich
      * @param <T>        Generic method to handle different types of HttpRequests
      * @return           The supplied HttpRequest object
      */
     protected <T extends HttpRequestBase> T enrich(T request) {
-        if (null != defaultDomain) {
-            request.addHeader(HttpHeaders.ACCEPT_LANGUAGE,defaultDomain.getLocale());
-        }
         return request;
     }
 
@@ -161,6 +158,9 @@ public abstract class AbstractService {
      */
     protected <T> T execute(HttpRequestBase request, TypeReference<T> typeReference) {
         try {
+            if (null == request.getHeaders(HttpHeaders.ACCEPT_LANGUAGE)) {
+                request.addHeader(HttpHeaders.ACCEPT_LANGUAGE,defaultDomain.getLocale());
+            }
             HttpResponse httpResponse = httpClient.execute(request);
             if (200 == httpResponse.getStatusLine().getStatusCode()) {
                 return objectMapper.readValue(httpResponse.getEntity().getContent(),typeReference);
