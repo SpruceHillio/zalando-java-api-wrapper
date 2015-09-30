@@ -2,6 +2,7 @@ package io.sprucehill.zalando.api.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.sprucehill.zalando.api.exception.NotFoundException;
 import io.sprucehill.zalando.api.model.Domain;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
@@ -155,8 +156,9 @@ public abstract class AbstractService {
      * @param typeReference    The type of the expected response
      * @param <T>              Generic method to request different response data
      * @return                 The response data for the request
+     * @throws NotFoundException    This exception is thrown when a 404 status code is encountered on the response
      */
-    protected <T> T execute(HttpRequestBase request, TypeReference<T> typeReference) {
+    protected <T> T execute(HttpRequestBase request, TypeReference<T> typeReference) throws NotFoundException {
         try {
             if (null == request.getHeaders(HttpHeaders.ACCEPT_LANGUAGE)) {
                 request.addHeader(HttpHeaders.ACCEPT_LANGUAGE,defaultDomain.getLocale());
@@ -164,6 +166,9 @@ public abstract class AbstractService {
             HttpResponse httpResponse = httpClient.execute(request);
             if (200 == httpResponse.getStatusLine().getStatusCode()) {
                 return objectMapper.readValue(httpResponse.getEntity().getContent(),typeReference);
+            }
+            if (404 == httpResponse.getStatusLine().getStatusCode()) {
+                throw new NotFoundException(httpResponse.getStatusLine().getReasonPhrase());
             }
             else {
                 throw new RuntimeException("StatusCode: "+httpResponse.getStatusLine().getStatusCode());
