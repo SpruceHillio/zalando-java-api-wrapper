@@ -1,6 +1,7 @@
 package io.sprucehill.zalando.api.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import io.sprucehill.zalando.api.exception.NotFoundException;
 import io.sprucehill.zalando.api.model.Brand;
 import io.sprucehill.zalando.api.model.Domain;
 import org.apache.http.HttpHeaders;
@@ -34,34 +35,34 @@ public class BrandService extends AbstractService implements IBrandService {
     }
 
     @Override
-    public List<Brand> list() {
+    public List<Brand> list() throws NotFoundException {
         return list(defaultDomain);
     }
 
     @Override
-    public List<Brand> list(Integer page, Integer pageSize) {
+    public List<Brand> list(Integer page, Integer pageSize) throws NotFoundException {
         return list(defaultDomain,page,pageSize);
     }
 
     @Override
-    public List<Brand> list(Domain domain) {
+    public List<Brand> list(Domain domain) throws NotFoundException {
         return list(domain,1,defaultPageSize);
     }
 
     @Override
-    public List<Brand> list(Domain domain, Integer page, Integer pageSize) {
+    public List<Brand> list(Domain domain, Integer page, Integer pageSize) throws NotFoundException {
         HttpGet request = getRequest("/brands?page=" + page + "&pageSize=" + pageSize);
         request.addHeader(HttpHeaders.ACCEPT_LANGUAGE,domain.getLocale());
         return execute(request, new TypeReference<List<Brand>>() {});
     }
 
     @Override
-    public Brand read(String code) {
+    public Brand read(String code) throws NotFoundException {
         return read(code,defaultDomain);
     }
 
     @Override
-    public Brand read(String code, Domain domain) {
+    public Brand read(String code, Domain domain) throws NotFoundException {
         HttpGet request = getRequest("/brands/" + code);
         request.addHeader(HttpHeaders.ACCEPT_LANGUAGE,domain.getLocale());
         return execute(request, new TypeReference<Brand>() {});

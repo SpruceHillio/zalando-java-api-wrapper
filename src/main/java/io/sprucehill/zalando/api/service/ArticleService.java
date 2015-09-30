@@ -1,6 +1,7 @@
 package io.sprucehill.zalando.api.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import io.sprucehill.zalando.api.exception.NotFoundException;
 import io.sprucehill.zalando.api.model.Article;
 import io.sprucehill.zalando.api.model.Domain;
 import org.apache.http.HttpHeaders;
@@ -33,12 +34,12 @@ public class ArticleService extends AbstractService implements IArticleService {
     }
 
     @Override
-    public Article read(String id) {
+    public Article read(String id) throws NotFoundException {
         return read(id,defaultDomain);
     }
 
     @Override
-    public Article read(String id, Domain domain) {
+    public Article read(String id, Domain domain) throws NotFoundException {
         HttpGet request = getRequest("/articles/" + id);
         request.addHeader(HttpHeaders.ACCEPT_LANGUAGE,domain.getLocale());
         return execute(request, new TypeReference<Article>() {});

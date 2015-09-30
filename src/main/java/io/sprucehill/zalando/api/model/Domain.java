@@ -16,7 +16,7 @@ public enum Domain {
     IT("it-IT","www.zalando.it",22,Currency.EUR,SizeChart.IT),
     NL("nl-NL","www.zalando.nl",21,Currency.EUR,SizeChart.EU),
     NO("no-NO","www.zalando.no",25,Currency.NOK,SizeChart.EU),
-    PL("pl-PL","www.zalando.pl",23,Currency.EUR,SizeChart.EU),
+    PL("pl-PL","www.zalando.pl",23,Currency.PLN,SizeChart.EU),
     SE("se-SE","www.zalando.se",25,Currency.SEK,SizeChart.EU),
     LU("fr-LU","www.zalando.lu",17,Currency.EUR,SizeChart.EU);
 
