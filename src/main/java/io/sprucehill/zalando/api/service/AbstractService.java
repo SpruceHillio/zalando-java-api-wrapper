@@ -8,12 +8,15 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.*;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * @author Michael Duergner
@@ -21,6 +24,14 @@ import java.io.IOException;
 public abstract class AbstractService {
 
     String apiBase = "https://api.zalando.com";
+
+    String scheme;
+
+    String host;
+
+    Integer port;
+
+    String pathPrefix;
 
     protected Domain defaultDomain;
 
@@ -79,7 +90,29 @@ public abstract class AbstractService {
             objectMapper = new ObjectMapper();
         }
         if (null == defaultDomain) {
-            throw new RuntimeException("You need to set a 'defaultDomain'");
+            throw new RuntimeException("'defaultDomain' must be set!");
+        }
+        if (null == apiBase) {
+            throw new RuntimeException("'apiBase' must be set!");
+        }
+        try {
+            URI uri = new URI(apiBase);
+            scheme = uri.getScheme();
+            host = uri.getHost();
+            port = uri.getPort();
+            pathPrefix = uri.getPath();
+            if (("https".equalsIgnoreCase(scheme) && 443 == port) || ("http".equalsIgnoreCase(scheme) && 80 == port)) {
+                port = null;
+            }
+            if ("/".equalsIgnoreCase(pathPrefix)) {
+                pathPrefix = null;
+            }
+            else if (pathPrefix.endsWith("/")) {
+                pathPrefix = pathPrefix.substring(0,pathPrefix.length()-1);
+            }
+        }
+        catch (URISyntaxException e) {
+            throw new RuntimeException("'apiBase' is invalid");
         }
     }
 
@@ -91,6 +124,17 @@ public abstract class AbstractService {
      */
     HttpGet getRequest(String path) {
         return enrich(new HttpGet(normalizePath(path)));
+    }
+
+    /**
+     * Create an initialize a GET request for the specified URIBuilder
+     *
+     * @param uriBuilder    The URIBuilder to work upon
+     * @return              A HttGet object for the specified URIBuilder's URI
+     * @throws URISyntaxException   Throw if URI cannot be built from the supplied URIBuilder
+     */
+    HttpGet getRequest(URIBuilder uriBuilder) throws URISyntaxException {
+        return enrich(new HttpGet(normalize(uriBuilder)));
     }
 
     /**
@@ -125,7 +169,7 @@ public abstract class AbstractService {
 
     /**
      * Helper method to normalize a supplied path;
-     * the current implementation only append a '/' if none is present.
+     * the current implementation only append a '/' if none is present and prefix with API Base
      *
      * @param path    The path to normalize
      * @return        The normalized path
@@ -135,6 +179,28 @@ public abstract class AbstractService {
             path = "/" + path;
         }
         return apiBase + path;
+    }
+
+    /**
+     * Helper method to normalize a supplied path;
+     * the current implementation will set scheme, host, port and prefix with pathPrefix if present
+     *
+     * @param uriBuilder    The URIBuilder to work upon
+     * @return              A normalized path with defaults set if necessary
+     * @throws URISyntaxException   Throw if the URL cannot be built
+     */
+    protected String normalize(URIBuilder uriBuilder) throws URISyntaxException {
+        if (null == uriBuilder.getHost() || null == uriBuilder.getScheme()) {
+            uriBuilder.setHost(host);
+            uriBuilder.setScheme(scheme);
+            if (null != port) {
+                uriBuilder.setPort(port);
+            }
+            if (null != pathPrefix) {
+                uriBuilder.setPath(pathPrefix + uriBuilder.getPath());
+            }
+        }
+        return uriBuilder.build().toString();
     }
 
     /**
