@@ -4,6 +4,8 @@ import io.sprucehill.zalando.api.exception.NotFoundException;
 import io.sprucehill.zalando.api.model.Article;
 import io.sprucehill.zalando.api.model.Domain;
 
+import java.util.List;
+
 /**
  * Service interface to article related API endpoints
  *
@@ -65,4 +67,44 @@ public interface IArticleService {
      * @throws NotFoundException    A NotFoundException is thrown if the article cannot be loaded; you might want to try and change the domain.
      */
     Article read(String id, Domain domain) throws NotFoundException;
+
+    /**
+     * Get variants of the article specified by the ID (SKU) with sorting by popularity and using default domain
+     *
+     * @param id    The ID of the article to get variants for
+     * @return      A list of articles being variants of the article specified by the ID submitted
+     * @throws NotFoundException    A NotFoundException is thrown if the article cannot be loaded; you might want to try and change the domain.
+     */
+    List<Article> variants(String id) throws NotFoundException;
+
+    /**
+     * Get variants of the article specified by the ID (SKU) with the specified sorting and using default domain
+     *
+     * @param id        The ID of the article to get variants for
+     * @param sorting   The sorting to use
+     * @return          A list of articles being variants of the article specified by the ID submitted
+     * @throws NotFoundException    A NotFoundException is thrown if the article cannot be loaded; you might want to try and change the domain.
+     */
+    List<Article> variants(String id, Sorting sorting) throws NotFoundException;
+
+    /**
+     * Get variants of the article specified by the ID (SKU) with sorting by popularity and using the specified domain
+     *
+     * @param id        The ID of the article to get variants for
+     * @param domain    The domain to use
+     * @return          A list of articles being variants of the article specified by the ID submitted
+     * @throws NotFoundException    A NotFoundException is thrown if the article cannot be loaded; you might want to try and change the domain.
+     */
+    List<Article> variants(String id, Domain domain) throws NotFoundException;
+
+    /**
+     * Get variants of the article specified by the ID (SKU) with the specified sorting and using the specified domain
+     *
+     * @param id        The ID of the article to get variants for
+     * @param sorting   The sorting to use
+     * @param domain    The domain to use
+     * @return          A list of articles being variants of the article specified by the ID submitted
+     * @throws NotFoundException    A NotFoundException is thrown if the article cannot be loaded; you might want to try and change the domain.
+     */
+    List<Article> variants(String id, Sorting sorting, Domain domain) throws NotFoundException;
 }
