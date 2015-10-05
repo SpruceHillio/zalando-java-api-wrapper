@@ -24,7 +24,7 @@ apply plugin: 'signing'
 
 group = 'io.sprucehill'
 archivesBaseName = 'zalando-java-api-wrapper'
-version = '0.3.2'
+version = '0.3.3'
 description = 'A Java API client for the Zalando REST API'
 
 processResources {
@@ -62,6 +62,7 @@ artifacts {
 }
 
 signing {
+    required { gradle.taskGraph.hasTask("uploadArchives") }
     sign configurations.archives
 }
 
