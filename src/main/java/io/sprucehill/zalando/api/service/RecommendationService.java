@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Implementation of the IRecommendationService interface
  *
- * @author Michael Duergner <michael@sprucehill.io>
+ * @author Michael Duergner
  */
 public class RecommendationService extends AbstractService implements IRecommendationService {
 
@@ -26,5 +26,30 @@ public class RecommendationService extends AbstractService implements IRecommend
         HttpGet request = getRequest("/recommendations/" + id);
         request.addHeader(HttpHeaders.ACCEPT_LANGUAGE,domain.getLocale());
         return execute(request, new TypeReference<List<Article>>() {});
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    protected static abstract class Init<B extends Init<B>> extends AbstractService.Init<RecommendationService, IRecommendationService, B> {
+
+        protected Init() {
+            super(new RecommendationService());
+        }
+    }
+
+    public static class Builder extends Init<Builder> {
+
+        @Override
+        protected Builder self() {
+            return this;
+        }
+
+        @Override
+        public IRecommendationService build() {
+            onBuild();
+            return service;
+        }
     }
 }

@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import io.sprucehill.zalando.api.exception.NotFoundException;
 import io.sprucehill.zalando.api.model.Article;
 import io.sprucehill.zalando.api.model.Domain;
+import io.sprucehill.zalando.api.model.internal.Page;
 import org.apache.http.HttpHeaders;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.message.BasicNameValuePair;
@@ -41,7 +43,7 @@ public class ArticleService extends AbstractService implements IArticleService {
 
     @Override
     public Article read(String id) throws NotFoundException {
-        return read(id,defaultDomain);
+        return read(id, defaultDomain);
     }
 
     @Override
@@ -54,38 +56,65 @@ public class ArticleService extends AbstractService implements IArticleService {
 
     @Override
     public List<Article> variants(String id) throws NotFoundException {
-        return variants(id, Sorting.POPULARITY);
+        return variants(id,null,defaultDomain);
     }
 
     @Override
     public List<Article> variants(String id, Sorting sorting) throws NotFoundException {
-        return variants(id,sorting,defaultDomain);
+        return variants(id,null,defaultDomain);
     }
 
     @Override
     public List<Article> variants(String id, Domain domain) throws NotFoundException {
-        return variants(id,Sorting.POPULARITY,domain);
+        return variants(id, null, domain);
     }
 
     @Override
     public List<Article> variants(String id, Sorting sorting, Domain domain) throws NotFoundException {
-        String modelId = id.substring(0,id.lastIndexOf("-"));
-        return search(Collections.singletonList(new BasicNameValuePair("articleModelId", modelId)),sorting,domain);
+        String modelId = id.substring(0, id.lastIndexOf("-"));
+        return search(Collections.singletonList(new BasicNameValuePair("articleModelId", modelId)), null, domain);
     }
 
     protected List<Article> search(List<NameValuePair> nameValuePairs, Sorting sorting, Domain domain) throws NotFoundException {
         URIBuilder builder = new URIBuilder().
                 setPath("/articles").
-                addParameters(nameValuePairs).
-                addParameter("sorting", sorting.getSortingString());
+                addParameters(nameValuePairs);
+        if (null != sorting) {
+            builder.addParameter("sorting",sorting.getSortingString());
+        }
         try {
             HttpGet request = getRequest(builder);
             request.addHeader(HttpHeaders.ACCEPT_LANGUAGE,domain.getLocale());
-            return execute(request, new TypeReference<List<Article>>() {});
+            return execute(request, new TypeReference<Page<List<Article>>>() {}).getContent();
         }
         catch (URISyntaxException e) {
             logger.error(e.getMessage(), e);
             throw new RuntimeException(e.getMessage(),e);
+        }
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    protected static abstract class Init<B extends Init<B>> extends AbstractService.Init<ArticleService, IArticleService, B> {
+
+        protected Init() {
+            super(new ArticleService());
+        }
+    }
+
+    public static class Builder extends Init<Builder> {
+
+        @Override
+        protected Builder self() {
+            return this;
+        }
+
+        @Override
+        public IArticleService build() {
+            onBuild();
+            return service;
         }
     }
 }

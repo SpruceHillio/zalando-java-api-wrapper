@@ -237,7 +237,7 @@ public abstract class AbstractService {
                 throw new NotFoundException(httpResponse.getStatusLine().getReasonPhrase());
             }
             else {
-                throw new RuntimeException("StatusCode: "+httpResponse.getStatusLine().getStatusCode());
+                throw new RuntimeException("StatusCode: "+httpResponse.getStatusLine().getStatusCode() + ", Reason: " + httpResponse.getStatusLine().getReasonPhrase());
             }
         }
         catch (IOException e) {
@@ -249,5 +249,42 @@ public abstract class AbstractService {
                 request.abort();
             }
         }
+    }
+
+    protected static abstract class Init<S extends AbstractService, I, B extends Init<S,I,B>> {
+
+        protected S service;
+
+        protected Init(S service) {
+            this.service = service;
+        }
+
+        public B withHttpClient(HttpClient httpClient) {
+            service.setHttpClient(httpClient);
+            return self();
+        }
+
+        public B withObjectMapper(ObjectMapper objectMapper) {
+            service.setObjectMapper(objectMapper);
+            return self();
+        }
+
+        public B withApiBase(String apiBase) {
+            service.setApiBase(apiBase);
+            return self();
+        }
+
+        public B withDefaultDomain(Domain defaultDomain) {
+            service.setDefaultDomain(defaultDomain);
+            return self();
+        }
+
+        protected void onBuild() {
+            service.postConstruct();
+        }
+
+        protected abstract B self();
+
+        public abstract I build();
     }
 }

@@ -7,7 +7,7 @@ import io.sprucehill.zalando.api.model.Domain;
 import java.util.List;
 
 /**
- * Service interface for methods related to recommendatios
+ * Service interface for methods related to recommendations
  *
  * @author Michael Duergner
  */

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import io.sprucehill.zalando.api.exception.NotFoundException;
 import io.sprucehill.zalando.api.model.Brand;
 import io.sprucehill.zalando.api.model.Domain;
+import io.sprucehill.zalando.api.model.internal.Page;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpGet;
 
@@ -53,18 +54,49 @@ public class BrandService extends AbstractService implements IBrandService {
     public List<Brand> list(Domain domain, Integer page, Integer pageSize) throws NotFoundException {
         HttpGet request = getRequest("/brands?page=" + page + "&pageSize=" + pageSize);
         request.addHeader(HttpHeaders.ACCEPT_LANGUAGE,domain.getLocale());
-        return execute(request, new TypeReference<List<Brand>>() {});
+        return execute(request, new TypeReference<Page<List<Brand>>>() {}).getContent();
     }
 
     @Override
     public Brand read(String code) throws NotFoundException {
-        return read(code,defaultDomain);
+        return read(code, defaultDomain);
     }
 
     @Override
     public Brand read(String code, Domain domain) throws NotFoundException {
         HttpGet request = getRequest("/brands/" + code);
         request.addHeader(HttpHeaders.ACCEPT_LANGUAGE,domain.getLocale());
-        return execute(request, new TypeReference<Brand>() {});
+        return execute(request, new TypeReference<Brand>() {
+        });
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    protected static abstract class Init<B extends Init<B>> extends AbstractService.Init<BrandService, IBrandService, B> {
+
+        protected Init() {
+            super(new BrandService());
+        }
+
+        public B withDefaultPageSize(Integer defaultPageSize) {
+            service.setDefaultPageSize(defaultPageSize);
+            return self();
+        }
+    }
+
+    public static class Builder extends Init<Builder> {
+
+        @Override
+        protected Builder self() {
+            return this;
+        }
+
+        @Override
+        public IBrandService build() {
+            onBuild();
+            return service;
+        }
     }
 }
