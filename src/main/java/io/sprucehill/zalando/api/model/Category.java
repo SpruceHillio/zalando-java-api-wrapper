@@ -5,96 +5,92 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * 
- * @author dipteewarudkar
- *
+ * @author Diptee Warudkar
  */
-public  class Category extends Base{
+public class Category extends Base {
 
-	@JsonProperty
-	String name;
-	
-	@JsonProperty
-	String key;
+    @JsonProperty
+    String name;
 
-	
-	@JsonProperty
-	String parentKey;
+    @JsonProperty
+    String key;
 
-	@JsonProperty
-	List<String> childKeys;
+    @JsonProperty
+    String parentKey;
 
-	@JsonProperty
-	String type;
+    @JsonProperty
+    List<String> childKeys;
 
-	@JsonProperty
-	Boolean outlet;
+    @JsonProperty
+    String type;
 
-	@JsonProperty
-	Boolean hidden;
+    @JsonProperty
+    Boolean outlet;
 
-	@JsonProperty
-	String targetGroup;
+    @JsonProperty
+    Boolean hidden;
 
-	@JsonProperty
-	List<String> suggestedFilters;
+    @JsonProperty
+    String targetGroup;
 
-	public String getName() {
-		return name;
-	}
+    @JsonProperty
+    List<String> suggestedFilters;
 
-
-	public String getParentKey() {
-		return parentKey;
-	}
+    public String getName() {
+        return name;
+    }
 
 
-	public List<String> getChildKeys() {
-		return childKeys;
-	}
+    public String getParentKey() {
+        return parentKey;
+    }
 
 
-	public String getType() {
-		return type;
-	}
+    public List<String> getChildKeys() {
+        return childKeys;
+    }
 
 
-	public Boolean isOutlet() {
-		return outlet;
-	}
+    public String getType() {
+        return type;
+    }
 
 
-	public Boolean isHidden() {
-		return hidden;
-	}
+    public Boolean isOutlet() {
+        return outlet;
+    }
 
 
-	public String getTargetGroup() {
-		return targetGroup;
-	}
+    public Boolean isHidden() {
+        return hidden;
+    }
 
 
-	public List<String> getSuggestedFilters() {
-		return suggestedFilters;
-	}
+    public String getTargetGroup() {
+        return targetGroup;
+    }
 
-	public String getKey() {
-		return key;
-	}
 
-	 @Override
-	    public boolean equals(Object o) {
-	        if (this == o) return true;
-	        if (o == null || getClass() != o.getClass()) return false;
+    public List<String> getSuggestedFilters() {
+        return suggestedFilters;
+    }
 
-	        Category category = (Category) o;
+    public String getKey() {
+        return key;
+    }
 
-	        return key.equals(category.key);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-	    }
+        Category category = (Category) o;
 
-	    @Override
-	    public int hashCode() {
-	        return key.hashCode();
-	    }
+        return key.equals(category.key);
+    }
+
+    @Override
+    public int hashCode() {
+        return key.hashCode();
+    }
 }

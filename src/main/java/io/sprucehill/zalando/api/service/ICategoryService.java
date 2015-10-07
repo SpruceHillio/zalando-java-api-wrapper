@@ -5,10 +5,11 @@ import java.util.List;
 import io.sprucehill.zalando.api.exception.NotFoundException;
 import io.sprucehill.zalando.api.model.Category;
 import io.sprucehill.zalando.api.model.Domain;
+
 /**
  * Service interface to category related API endpoints
- * @author dipteewarudkar
  *
+ * @author Diptee Warudkar
  */
 public interface ICategoryService {
 	
@@ -17,7 +18,7 @@ public interface ICategoryService {
      *
      * @param key    The key of the category to read
      * @param domain The shop domain to use
-     * @return      The category with the requested key
+     * @return       The category with the requested key
      * @throws NotFoundException    A NotFoundException is thrown if the category cannot be loaded;
      */
 	Category read(Domain domain,String key) throws NotFoundException;
@@ -25,6 +26,7 @@ public interface ICategoryService {
 	/**
      * List all the categories for the given domain
      *
+	 * @param domain The shop domain to use
      * @return The category with the requested key
      * @throws NotFoundException    A NotFoundException is thrown if the category cannot be loaded;
      */
@@ -45,10 +47,8 @@ public interface ICategoryService {
      * Read a specific category; 
      *
      * @param key    The key of the category to read; this method uses default domain
-     * @param domain The shop domain to use
      * @return      The category with the requested key
      * @throws NotFoundException    A NotFoundException is thrown if the category cannot be loaded;
      */
 	Category read(String key) throws NotFoundException;
-
 }

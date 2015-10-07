@@ -1,6 +1,5 @@
 package io.sprucehill.zalando.api.service;
 
-
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -13,21 +12,13 @@ import io.sprucehill.zalando.api.exception.NotFoundException;
 import io.sprucehill.zalando.api.model.Category;
 import io.sprucehill.zalando.api.model.Domain;
 
-
 /**
  * Implementation of the ICategoryService  interface
- * @author dipteewarudkar
  *
+ * @author Diptee Warudkar
  */
 public class CategoryService extends AbstractService implements ICategoryService{
 
-	
-	@PostConstruct
-    @Override
-    public void postConstruct() {
-        super.postConstruct();
-    }
-	
 	@Override
 	public List<Category> list()  throws NotFoundException{
 		return list(defaultDomain);
@@ -44,16 +35,13 @@ public class CategoryService extends AbstractService implements ICategoryService
 	public Category read(String key) throws NotFoundException {
 		return read(defaultDomain,key);
 	}
-	
 
 	@Override
 	public Category read(Domain domain, String key) throws NotFoundException {
-		HttpGet request = getRequest("/categories/"+key);
+		HttpGet request = getRequest("/categories/" + key);
 		request.addHeader(HttpHeaders.ACCEPT_LANGUAGE,domain.getLocale());
 		return execute(request, new TypeReference<Category>() {});
 	}
-
-	
 }
 
 
