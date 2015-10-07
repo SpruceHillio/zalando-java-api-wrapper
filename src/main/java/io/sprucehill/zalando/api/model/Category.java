@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * 
+ * @author dipteewarudkar
+ *
+ */
 public  class Category extends Base{
 
 	@JsonProperty
@@ -23,10 +28,10 @@ public  class Category extends Base{
 	String type;
 
 	@JsonProperty
-	boolean outlet;
+	Boolean outlet;
 
 	@JsonProperty
-	boolean hidden;
+	Boolean hidden;
 
 	@JsonProperty
 	String targetGroup;
@@ -54,12 +59,12 @@ public  class Category extends Base{
 	}
 
 
-	public boolean isOutlet() {
+	public Boolean isOutlet() {
 		return outlet;
 	}
 
 
-	public boolean isHidden() {
+	public Boolean isHidden() {
 		return hidden;
 	}
 
