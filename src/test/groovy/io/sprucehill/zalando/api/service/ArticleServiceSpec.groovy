@@ -2,6 +2,7 @@ package io.sprucehill.zalando.api.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.sprucehill.zalando.api.exception.NotFoundException
+import io.sprucehill.zalando.api.model.Currency
 import io.sprucehill.zalando.api.model.Domain
 import org.apache.http.impl.client.HttpClientBuilder
 import spock.lang.Specification
@@ -36,6 +37,15 @@ class ArticleServiceSpec extends Specification {
         then:
         'LM121C05Q-K11' == article.getId()
         'Blue' == article.getColor()
+    }
+
+    def 'read an existing single article with SE domain'() {
+        when:
+        def article = articleService.read('LM121C05Q-K11',Domain.SE)
+        then:
+        'LM121C05Q-K11' == article.getId()
+        Currency.SEK == article.getUnits().first().getPrice().getCurrency()
+        'Blå' == article.getColor()
     }
 
     def 'read a not existing article with default domain'() {
