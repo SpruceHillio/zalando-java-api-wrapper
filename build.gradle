@@ -24,7 +24,7 @@ apply plugin: 'signing'
 
 group = 'io.sprucehill'
 archivesBaseName = 'zalando-java-api-wrapper'
-version = '0.5.0'
+version = '0.6.0-SNAPSHOT'
 description = 'A Java API client for the Zalando REST API'
 
 processResources {
