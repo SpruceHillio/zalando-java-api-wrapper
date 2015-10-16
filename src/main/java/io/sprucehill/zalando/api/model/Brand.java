@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Brand extends Base {
 
     @JsonProperty
-    String code;
+    String key;
 
     @JsonProperty
     String name;
@@ -25,8 +25,8 @@ public class Brand extends Base {
     @JsonProperty
     String shopUrl;
 
-    public String getCode() {
-        return code;
+    public String getKey() {
+        return key;
     }
 
     public String getName() {
@@ -56,12 +56,12 @@ public class Brand extends Base {
 
         Brand brand = (Brand) o;
 
-        return code.equals(brand.code);
+        return key.equals(brand.key);
 
     }
 
     @Override
     public int hashCode() {
-        return code.hashCode();
+        return key.hashCode();
     }
 }
