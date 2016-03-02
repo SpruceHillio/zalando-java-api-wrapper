@@ -9,7 +9,7 @@ import io.sprucehill.zalando.api.nativecart.model.Customer;
  * @author dipteewarudkar
  *
  */
-public class CustomerService extends AbstractService implements ICustomerService{
+public class CustomerService extends AbstractService implements ICustomerService {
 
 	@Override
 	public Customer read(String customerNumber) {

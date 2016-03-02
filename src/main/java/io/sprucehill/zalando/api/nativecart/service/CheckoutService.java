@@ -12,7 +12,7 @@ import io.sprucehill.zalando.api.nativecart.model.Checkout;
  * @author dipteewarudkar
  *
  */
-public class CheckoutService extends AbstractService implements ICheckoutService{
+public class CheckoutService extends AbstractService implements ICheckoutService {
 
 	@Override
 	public Checkout read(String customerNumber, String checkout_id) {
