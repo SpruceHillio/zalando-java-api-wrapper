@@ -11,7 +11,7 @@ public interface ICustomerService {
 	
 	/**
 	 * 
-	 * @param customer_number  The customer unique id
+	 * @param customerNumber  The customer unique id
 	 * @return Details of the customer with specified customer_number
 	 */
 	Customer read(String customerNumber);

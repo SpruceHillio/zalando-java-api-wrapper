@@ -20,22 +20,22 @@ public interface IAddressService {
 
 	/**
 	 * 
-	 * @param customer_number The customer unique id
+	 * @param customerNumber The customer unique id
 	 * @return The list of user addresses
 	 */
 	List<Address> read(String customerNumber) ;
 
 	/**
 	 * 
-	 * @param customer_number The customer unique id
-	 * @param address_id  The ID of the address to read
+	 * @param customerNumber The customer unique id
+	 * @param addressId  The ID of the address to read
 	 * @return The address with the requested ID for the specified customer
 	 */
 	Address read(String customerNumber,String addressId) ;
 
 	/**
 	 * 
-	 * @param customer_number The customer unique id
+	 * @param customerNumber The customer unique id
 	 * @param address_id The ID of the address to update
 	 * @param request The address object to update
 	 * @return The updated address object
@@ -44,7 +44,7 @@ public interface IAddressService {
 
 	/**
 	 * 	
-	 * @param customer_number The customer unique id
+	 * @param customerNumber The customer unique id
 	 * @param createAddressRequest The address object to create
 	 * @return Newly created address object
 	 */

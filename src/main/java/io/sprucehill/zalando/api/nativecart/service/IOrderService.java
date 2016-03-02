@@ -12,7 +12,7 @@ public interface IOrderService {
 	
 	/**
 	 * 
-	 * @param customer_number The unique id of the customer
+	 * @param customerNumber The unique id of the customer
 	 * @param createOrderRequest The order object to be created
 	 * @return The newly create order object
 	 */

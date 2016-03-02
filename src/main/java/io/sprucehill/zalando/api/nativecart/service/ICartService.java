@@ -11,7 +11,7 @@ public interface ICartService {
 	
 	/**
 	 * 
-	 * @param access_token access token for performing create cart operation
+	 * @param accessToken access token for performing create cart operation
 	 * @param createCartRequest The Cart object to be created
 	 * @return Newly created cart object
 	 */
@@ -19,16 +19,16 @@ public interface ICartService {
 	
 	/**
 	 * 
-	 * @param access_token access token for performing create cart operation
-	 * @param cart_id The ID of the cart to read
+	 * @param accessToken access token for performing create cart operation
+	 * @param cartId The ID of the cart to read
 	 * @return The cart with the requested ID for the specified access_token
 	 */
 	Cart read(String accessToken,String cartId);
 	
 	/**
 	 * 
-	 * @param access_token
-	 * @param cart_id
+	 * @param accessToken
+	 * @param cartId
 	 * @param updateCartRequest
 	 * @return
 	 */
