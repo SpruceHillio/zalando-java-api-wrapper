@@ -36,7 +36,7 @@ public interface IAddressService {
 	/**
 	 * 
 	 * @param customerNumber The customer unique id
-	 * @param address_id The ID of the address to update
+	 * @param addressId The ID of the address to update
 	 * @param request The address object to update
 	 * @return The updated address object
 	 */
