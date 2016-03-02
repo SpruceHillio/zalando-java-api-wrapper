@@ -1,5 +1,7 @@
 package io.sprucehill.zalando.api.nativecart.service;
 
+import java.util.List;
+
 import io.sprucehill.zalando.api.nativecart.model.Address;
 import io.sprucehill.zalando.api.nativecart.model.AddressCheckResponse;
 
@@ -21,7 +23,7 @@ public interface IAddressService {
 	 * @param customer_number The customer unique id
 	 * @return The list of user addresses
 	 */
-	Address read(String customerNumber) ;
+	List<Address> read(String customerNumber) ;
 
 	/**
 	 * 

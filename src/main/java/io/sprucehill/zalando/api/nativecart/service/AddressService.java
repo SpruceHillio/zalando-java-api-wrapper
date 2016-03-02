@@ -1,5 +1,7 @@
 package io.sprucehill.zalando.api.nativecart.service;
 
+import java.util.List;
+
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -16,9 +18,9 @@ import io.sprucehill.zalando.api.nativecart.model.AddressCheckResponse;
 public class AddressService extends AbstractService implements IAddressService {
 
 	@Override
-	public Address read(String customerNumber) {
+	public List<Address> read(String customerNumber) {
 		HttpGet request = getRequest("/customers/" + customerNumber +"/addresses");
-		return execute(request, new TypeReference<Address>() {});
+		return execute(request, new TypeReference<List<Address>>() {});
 	}
 
 	@Override
