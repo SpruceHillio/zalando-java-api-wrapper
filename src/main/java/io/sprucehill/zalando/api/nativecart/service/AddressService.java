@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import javax.annotation.PostConstruct;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -43,7 +44,7 @@ public class AddressService extends AbstractService implements IAddressService{
 
 	@Override
 	public UpdateAddressResponse update(String customer_number, String address_id, UpdateAddressRequest updateAddressRequest) {
-		HttpPost request = postRequest("/customers/" + customer_number +"/addresses");
+		HttpPut request = putRequest("/customers/" + customer_number +"/addresses");
 		
 		try {
 			request.setEntity(new StringEntity(objectMapper.writeValueAsString(updateAddressRequest)));
