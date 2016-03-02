@@ -1,81 +1,98 @@
 package io.sprucehill.zalando.api.nativecart.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.sprucehill.zalando.api.model.Base;
 
 /**
  * 
  * @author dipteewarudkar
  *
  */
-public abstract class Order extends Base{
-	@JsonProperty
-	private String order_number;	
-	@JsonProperty
-	private String customer_number;
-	@JsonProperty
-	private Address billing_address	;
-	@JsonProperty
-	private Address shipping_address;	
+public class Order extends Base {
+
+	@JsonProperty(value="order_number")
+	private String orderNumber;
+
+	@JsonProperty(value="customer_number")
+	private String customerNumber;
+
+	@JsonProperty(value="billing_address")
+	private Address billingAddress	;
+
+	@JsonProperty(value="shipping_address")
+	private Address shippingAddress;
+
 	@JsonProperty
 	private Delivery delivery;
-	@JsonProperty
-	private Money gross_total;
-	@JsonProperty
-	private Money tax_total;	
+
+	@JsonProperty(value="gross_total")
+	private Money grossTotal;
+
+	@JsonProperty(value="tax_total")
+	private Money taxTotal;
+
 	@JsonProperty
 	private String created;
-	@JsonProperty
-	private String detail_url;	
-	@JsonProperty
-	private String external_payment_url;
-	
+
+	@JsonProperty(value="detail_url")
+	private String detailUrl;	
+
+	@JsonProperty(value="external_payment_url")
+	private String externalPaymentUrl;
+
 	public Order(){}
-	
-	public Order(String order_number,String customer_number,Address billing_address,Address shipping_address,Delivery delivery,
-			Money gross_total,Money tax_total,String created,String detail_url,String external_payment_url){
-		this.order_number=order_number;
-		this.customer_number=customer_number;
-		this.billing_address=billing_address;
-		this.shipping_address=shipping_address;
+
+	public Order(String orderNumber,String customerNumber,Address billingAddress,Address shippingAddress,Delivery delivery,
+			Money grossTotal,Money taxTotal,String created,String detailUrl,String externalPaymentUrl){
+		this.orderNumber=orderNumber;
+		this.customerNumber=customerNumber;
+		this.billingAddress=billingAddress;
+		this.shippingAddress=shippingAddress;
 		this.delivery=delivery;
-		this.gross_total=gross_total;
-		this.tax_total=tax_total;
+		this.grossTotal=grossTotal;
+		this.taxTotal=taxTotal;
 		this.created=created;
-		this.detail_url=detail_url;
-		this.external_payment_url=external_payment_url;
+		this.detailUrl=detailUrl;
+		this.externalPaymentUrl=externalPaymentUrl;
+	}
+
+	public String getOrderNumber() {
+		return orderNumber;
 	}
 	
+	public String getCustomerNumber() {
+		return customerNumber;
+	}
 	
-	public String getOrder_number() {
-		return order_number;
+	public Address getBillingAddress() {
+		return billingAddress;
 	}
-	public String getCustomer_number() {
-		return customer_number;
+	
+	public Address getShippingAddress() {
+		return shippingAddress;
 	}
-	public Address getBilling_address() {
-		return billing_address;
-	}
-	public Address getShipping_address() {
-		return shipping_address;
-	}
+	
 	public Delivery getDelivery() {
 		return delivery;
 	}
-	public Money getGross_total() {
-		return gross_total;
+	
+	public Money getGrossTotal() {
+		return grossTotal;
 	}
-	public Money getTax_total() {
-		return tax_total;
+	
+	public Money getTaxTotal() {
+		return taxTotal;
 	}
+	
 	public String getCreated() {
 		return created;
 	}
-	public String getDetail_url() {
-		return detail_url;
-	}
-	public String getExternal_payment_url() {
-		return external_payment_url;
-	}	
-
 	
+	public String getDetailUrl() {
+		return detailUrl;
+	}
+	
+	public String getExternalPaymentUrl() {
+		return externalPaymentUrl;
+	}
 }

@@ -1,63 +1,66 @@
 package io.sprucehill.zalando.api.nativecart.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.sprucehill.zalando.api.model.Base;
 
 /**
  * 
  * @author dipteewarudkar
  *
  */
-public abstract class Checkout extends Base{
+public abstract class Checkout extends Base {
+
 	@JsonProperty
 	private String id;	
-	@JsonProperty
-	private String customer_number;
-	@JsonProperty
-	private String cart_id;
-	@JsonProperty
-	private String billing_address_id;	
-	@JsonProperty
-	private String shipping_address_id;	
+
+	@JsonProperty(value="customer_number")
+	private String customerNumber;
+
+	@JsonProperty(value="cart_id")
+	private String cartId;
+
+	@JsonProperty(value="billing_address_id")
+	private String billingAddressId;	
+
+	@JsonProperty(value="billing_address_id")
+	private String shippingAddressId;	
+
 	@JsonProperty
 	private Delivery delivery;
+
 	@JsonProperty
 	private Payment payment; 
 
-	public Checkout(){}
+	public Checkout() {}
 
-	public Checkout(String id,String customer_number,String cart_id, String billing_address_id,String shipping_address_id,Delivery delivery,Payment payment){
+	public Checkout(String id,String customerNumber,String cartId, String billingAddressId,String shippingAddressId,Delivery delivery,Payment payment){
 		this.id=id;
-		this.customer_number=customer_number;
-		this.cart_id=cart_id;
-		this.billing_address_id=billing_address_id;
-		this.shipping_address_id=shipping_address_id;
+		this.customerNumber=customerNumber;
+		this.cartId=cartId;
+		this.billingAddressId=billingAddressId;
+		this.shippingAddressId=shippingAddressId;
 		this.delivery=delivery;
 		this.payment=payment;
 	}
 
-
-	
 	public String getId() {
 		return id;
 	}
 
-	public String getCustomer_number() {
-		return customer_number;
+	public String getCustomerNumber() {
+		return customerNumber;
 	}
 
-	public String getCart_id() {
-		return cart_id;
+	public String getCartId() {
+		return cartId;
 	}
 
-	public String getBilling_address_id() {
-		return billing_address_id;
+	public String getBillingAddressId() {
+		return billingAddressId;
 	}
 
-	public String getShipping_address_id() {
-		return shipping_address_id;
+	public String getShippingAddressId() {
+		return shippingAddressId;
 	}
 
 	public Delivery getDelivery() {

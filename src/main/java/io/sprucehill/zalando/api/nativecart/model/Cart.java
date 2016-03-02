@@ -2,28 +2,41 @@ package io.sprucehill.zalando.api.nativecart.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.sprucehill.zalando.api.model.Base;
 
-public abstract class Cart extends Base{
+/**
+ * 
+ * @author dipteewarudkar
+ *
+ */
+public abstract class Cart extends Base {
+	
 	@JsonProperty
-	private String id ;
+	private String id;
+	
 	@JsonProperty
-	private String appDomainId ;
+	private String appDomainId;
+	
 	@JsonProperty
 	private List<Items> items = new ArrayList<Items>();
+	
 	@JsonProperty
 	private List<String> itemsOutOfStock = new ArrayList<String>();
+	
 	@JsonProperty
-	private Delivery delivery ;
+	private Delivery delivery;
+	
 	@JsonProperty
-	private Money grossTotal ;
+	private Money grossTotal;
+	
 	@JsonProperty
-	private Money taxTotal ;
+	private Money taxTotal;
+	
 	@JsonProperty
 	private String cartUrl;
 	
-	public Cart(){}
+	public Cart() {}
 	
 	public Cart(String id,String appDomainId ,List<Items> items,List<String> itemsOutOfStock,Delivery delivery,
 			Money grossTotal,Money taxTotal,String cartUrl){
@@ -35,34 +48,37 @@ public abstract class Cart extends Base{
 		this.grossTotal =grossTotal;
 		this.taxTotal= taxTotal;
 		this.cartUrl=cartUrl;
-		
 	}
 	
 	public String getId() {
 		return id;
 	}
+	
 	public String getAppDomainId() {
 		return appDomainId;
 	}
+	
 	public List<Items> getItems() {
 		return items;
 	}
+	
 	public List<String> getItemsOutOfStock() {
 		return itemsOutOfStock;
 	}
+	
 	public Delivery getDelivery() {
 		return delivery;
 	}
+	
 	public Money getGrossTotal() {
 		return grossTotal;
 	}
+	
 	public Money getTaxTotal() {
 		return taxTotal;
 	}
+	
 	public String getCartUrl() {
 		return cartUrl;
 	}
-	
-	
-
 }

@@ -1,9 +1,6 @@
 package io.sprucehill.zalando.api.nativecart.service;
 
-import io.sprucehill.zalando.api.nativecart.model.CreateCartRequest;
-import io.sprucehill.zalando.api.nativecart.model.CreateCartResponse;
-import io.sprucehill.zalando.api.nativecart.model.GetCartResponse;
-import io.sprucehill.zalando.api.nativecart.model.UpdateCartItemsRequest;
+import io.sprucehill.zalando.api.nativecart.model.Cart;
 
 /**
  * 
@@ -18,7 +15,7 @@ public interface ICartService {
 	 * @param createCartRequest The Cart object to be created
 	 * @return Newly created cart object
 	 */
-	CreateCartResponse create(String access_token,CreateCartRequest createCartRequest);
+	Cart create(String accessToken,Cart createCartRequest);
 	
 	/**
 	 * 
@@ -26,7 +23,7 @@ public interface ICartService {
 	 * @param cart_id The ID of the cart to read
 	 * @return The cart with the requested ID for the specified access_token
 	 */
-	GetCartResponse read(String access_token,String cart_id);
+	Cart read(String accessToken,String cartId);
 	
 	/**
 	 * 
@@ -35,6 +32,5 @@ public interface ICartService {
 	 * @param updateCartRequest
 	 * @return
 	 */
-	UpdateCartItemsRequest update(String access_token,String cart_id,UpdateCartItemsRequest updateCartRequest );
-
+	Cart update(String accessToken,String cartId,Cart updateCartRequest);
 }

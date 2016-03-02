@@ -1,7 +1,7 @@
 package io.sprucehill.zalando.api.nativecart.service;
 
 import io.sprucehill.zalando.api.nativecart.model.CreateOrderRequest;
-import io.sprucehill.zalando.api.nativecart.model.CreateOrderResponse;
+import io.sprucehill.zalando.api.nativecart.model.Order;
 
 /**
  * 
@@ -16,6 +16,5 @@ public interface IOrderService {
 	 * @param createOrderRequest The order object to be created
 	 * @return The newly create order object
 	 */
-	CreateOrderResponse create(String customer_number,CreateOrderRequest createOrderRequest);
-
+	Order create(String customerNumber,CreateOrderRequest createOrderRequest);
 }

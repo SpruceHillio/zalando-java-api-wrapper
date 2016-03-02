@@ -1,18 +1,23 @@
 package io.sprucehill.zalando.api.nativecart.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.sprucehill.zalando.api.model.Base;
 
-public class CreateOrderRequest extends Base{
+/**
+ * 
+ * @author dipteewarudkar
+ *
+ */
+public class CreateOrderRequest extends Base {
 	
 	@JsonProperty
-	private String checkout_id;
+	private String checkoutId;
 
-	public String getCheckout_id() {
-		return checkout_id;
+	public String getCheckoutId() {
+		return checkoutId;
 	}
-
-	public void setCheckout_id(String checkout_id) {
-		this.checkout_id = checkout_id;
+	
+	public void setCheckoutId(String checkoutId) {
+		this.checkoutId = checkoutId;
 	}
-
 }
