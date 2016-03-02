@@ -9,6 +9,11 @@ import io.sprucehill.zalando.api.nativecart.model.GetAddressesResponse;
 import io.sprucehill.zalando.api.nativecart.model.UpdateAddressRequest;
 import io.sprucehill.zalando.api.nativecart.model.UpdateAddressResponse;
 
+/**
+ * 
+ * @author dipteewarudkar
+ *
+ */
 public interface IAddressService {
 	AddressCheckResponse checkAddress(AddressCheckRequest checkAddressRequest);
 

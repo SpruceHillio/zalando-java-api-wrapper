@@ -9,13 +9,13 @@ import java.util.List;
  */
 public class GetAddressesResponse extends Base {
 	
-	List<GetAddressesResponse> addresses;
+	List<GetAddressResponse> addresses;
 
-	public List<GetAddressesResponse> getAddresses() {
+	public List<GetAddressResponse> getAddresses() {
 		return addresses;
 	}
 
-	public void setAddresses(List<GetAddressesResponse> addresses) {
+	public void setAddresses(List<GetAddressResponse> addresses) {
 		this.addresses = addresses;
 	}
 
