@@ -2,7 +2,6 @@ package io.sprucehill.zalando.api.nativecart.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.sprucehill.zalando.api.exception.NotFoundException;
 import io.sprucehill.zalando.api.model.Domain;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
@@ -222,7 +221,6 @@ public abstract class AbstractService {
      * @param typeReference    The type of the expected response
      * @param <T>              Generic method to request different response data
      * @return                 The response data for the request
-     * @throws NotFoundException    This exception is thrown when a 404 status code is encountered on the response
      */
     protected <T> T execute(HttpRequestBase request, TypeReference<T> typeReference)  {
         try {
