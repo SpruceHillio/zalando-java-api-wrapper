@@ -10,8 +10,8 @@ import io.sprucehill.zalando.api.model.Base;
  */
 public class Customer extends Base {
 	
-	@JsonProperty
-	private String customer_number;
+	@JsonProperty(value="customer_number")
+	private String customerNumber;
 	
 	@JsonProperty
 	private String gender;
@@ -25,8 +25,8 @@ public class Customer extends Base {
 	@JsonProperty
 	private String email;
 	
-	public String getCustomer_number() {
-		return customer_number;
+	public String getCustomerNumber() {
+		return customerNumber;
 	}
 	
 	public String getGender() {

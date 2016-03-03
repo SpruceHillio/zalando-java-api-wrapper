@@ -11,17 +11,21 @@ import io.sprucehill.zalando.api.model.Base;
  */
 public class Money extends Base{
 	
+	public enum Currency {
+		EUR,DKK,GBP,CHF,NOK,SEK,PLN
+    }
+	
 	@JsonProperty
 	private BigInteger amount;
 	
 	@JsonProperty
-	private String currency;
+	private Currency currency;
 	
-	public String getCurrency() {
+	public Currency getCurrency() {
 		return currency;
 	}
 	
-	public void setCurrency(String currency) {
+	public void setCurrency(Currency currency) {
 		this.currency = currency;
 	}
 	
