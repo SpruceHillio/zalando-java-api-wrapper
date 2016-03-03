@@ -10,7 +10,7 @@ import io.sprucehill.zalando.api.model.Base;
  * @author dipteewarudkar
  *
  */
-public abstract class Cart extends Base {
+public class Cart extends Base {
 	
 	@JsonProperty
 	private String id;

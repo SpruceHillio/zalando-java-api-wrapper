@@ -16,6 +16,13 @@ public class Items extends Base {
 	@JsonProperty
 	private Integer quantity;
 	
+	public Items(){}
+	
+	public Items(String sku,Integer quantity){
+		this.sku = sku;
+		this.quantity = quantity;
+	}
+	
 	public Integer getQuantity() {
 		return quantity;
 	}
