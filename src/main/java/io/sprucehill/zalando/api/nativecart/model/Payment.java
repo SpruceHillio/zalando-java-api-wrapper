@@ -23,9 +23,24 @@ public class Payment extends Base {
 	
 	@JsonProperty
 	private Selected selected;
+	
+	@JsonProperty
+	private String token;
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 	public String getCallbackUrl() {
 		return callbackUrl;
+	}
+	
+	public void setCallbackUrl(String callbackUrl) {
+		this.callbackUrl = callbackUrl;
 	}
 	
 	public Map<String, String> getTemplateParameters() {

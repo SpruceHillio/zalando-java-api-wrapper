@@ -10,6 +10,9 @@ import io.sprucehill.zalando.api.model.Base;
  */
 public class Order extends Base {
 
+	@JsonProperty(value="checkout_id")
+	private String checkoutId;
+	
 	@JsonProperty(value="order_number")
 	private String orderNumber;
 
@@ -94,5 +97,9 @@ public class Order extends Base {
 	
 	public String getExternalPaymentUrl() {
 		return externalPaymentUrl;
+	}
+	
+	public void setCheckoutId(String checkoutId) {
+		this.checkoutId = checkoutId;
 	}
 }

@@ -8,7 +8,7 @@ import io.sprucehill.zalando.api.model.Base;
  * @author dipteewarudkar
  *
  */
-public abstract class Checkout extends Base {
+public  class Checkout extends Base {
 
 	@JsonProperty
 	private String id;	
@@ -61,6 +61,14 @@ public abstract class Checkout extends Base {
 
 	public String getShippingAddressId() {
 		return shippingAddressId;
+	}
+	
+	public void setBillingAddressId(String billingAddressId) {
+		this.billingAddressId = billingAddressId;
+	}
+
+	public void setShippingAddressId(String shippingAddressId) {
+		this.shippingAddressId = shippingAddressId;
 	}
 
 	public Delivery getDelivery() {
