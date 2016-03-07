@@ -122,7 +122,7 @@ public abstract class AbstractService {
      * @param path    The path of the GET request
      * @return        A HttpGet object for the specified path
      */
-    HttpGet getRequest(String path) {
+    protected HttpGet getRequest(String path) {
         return enrich(new HttpGet(normalizePath(path)));
     }
 
@@ -143,7 +143,7 @@ public abstract class AbstractService {
      * @param path    The path of the POST request
      * @return        A HttpGet object for the specified path
      */
-    HttpPost postRequest(String path) {
+    protected HttpPost postRequest(String path) {
         return enrich(new HttpPost(normalizePath(path)));
     }
 
@@ -153,7 +153,7 @@ public abstract class AbstractService {
      * @param path    The path of the PUT request
      * @return        A HttpGet object for the specified path
      */
-    HttpPut putRequest(String path) {
+    protected HttpPut putRequest(String path) {
         return enrich(new HttpPut(normalizePath(path)));
     }
 
@@ -222,7 +222,7 @@ public abstract class AbstractService {
      * @param typeReference    The type of the expected response
      * @param <T>              Generic method to request different response data
      * @return                 The response data for the request
-     * @throws NotFoundException    This exception is thrown when a 404 status code is encountered on the response
+     * @throws ZalandoException    This exception is thrown when a status other then 200 is encountered
      */
     protected <T> T execute(HttpRequestBase request, TypeReference<T> typeReference) throws NotFoundException {
         try {

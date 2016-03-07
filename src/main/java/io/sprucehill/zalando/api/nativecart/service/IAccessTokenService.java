@@ -11,5 +11,5 @@ public interface IAccessTokenService {
 	 *
 	 * @return access token
 	 */
-	String read();
+	String read() throws Exception;
 }

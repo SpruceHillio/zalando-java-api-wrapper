@@ -15,7 +15,7 @@ public interface ICheckoutService {
 	 * @param checkoutId The ID of the checkout to read
 	 * @return The checkout object with the requested ID for the specified customer
 	 */
-	Checkout read(String customerNumber,String checkoutId);
+	Checkout read(String customerNumber,String checkoutId) throws Exception;
 	
 	/**
 	 * 
@@ -23,7 +23,7 @@ public interface ICheckoutService {
 	 * @param CreatecheckoutRequest The checkout object to be created
 	 * @return The newly created checkout object 
 	 */
-	Checkout create(String customerNumber,Checkout CreatecheckoutRequest);
+	Checkout create(String customerNumber,Checkout CreatecheckoutRequest) throws Exception;
 	
 	/**
 	 * 
@@ -32,6 +32,6 @@ public interface ICheckoutService {
 	 * @param updateCheckoutRequest The checkout object to be updated
 	 * @return The updated checkout object
 	 */
-	Checkout update(String customerNumber,String checkoutId,Checkout updateCheckoutRequest);
+	Checkout update(String customerNumber,String checkoutId,Checkout updateCheckoutRequest) throws Exception;
 
 }

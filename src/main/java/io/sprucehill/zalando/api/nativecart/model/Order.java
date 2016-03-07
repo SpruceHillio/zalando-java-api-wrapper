@@ -1,5 +1,6 @@
 package io.sprucehill.zalando.api.nativecart.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.sprucehill.zalando.api.model.Base;
 
@@ -35,6 +36,7 @@ public class Order extends Base {
 	private Money taxTotal;
 
 	@JsonProperty
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private String created;
 
 	@JsonProperty(value="detail_url")

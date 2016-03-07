@@ -51,19 +51,19 @@ public class Address extends Base {
 
 	public Address(){}
 	
-	public Address(String id, String customer_number, String gender, String first_name, String last_name, String street,String additional, String zip, String city, String country_code, Boolean pack_station,Boolean default_billing, Boolean default_shipping) {
+	public Address(String id, String customerNumber, String gender, String firstName, String lastName, String street,String additional, String zip, String city, String countryCode, Boolean packStation,Boolean defaultBilling, Boolean defaultShipping) {
 		this.id=id;
-		this.customerNumber=customer_number;
+		this.customerNumber=customerNumber;
 		this.gender=gender;
-		this.firstName=first_name;
-		this.lastName=last_name;
+		this.firstName=firstName;
+		this.lastName=lastName;
 		this.street=street;
 		this.additional=additional;
 		this.city=city;
-		this.countryCode=country_code;
-		this.packStation=pack_station;
-		this.defaultBilling=default_billing;
-		this.defaultShipping=default_shipping;
+		this.countryCode=countryCode;
+		this.packStation=packStation;
+		this.defaultBilling=defaultBilling;
+		this.defaultShipping=defaultShipping;
 	}
 	
 	public String getId() {

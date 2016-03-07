@@ -15,5 +15,5 @@ public interface IOrderService {
 	 * @param createOrderRequest The order object to be created
 	 * @return The newly create order object
 	 */
-	Order create(String customerNumber,Order createOrderRequest);
+	Order create(String customerNumber,Order createOrderRequest) throws Exception;
 }

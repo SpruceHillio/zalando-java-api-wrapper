@@ -7,8 +7,11 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import com.fasterxml.jackson.core.type.TypeReference;
+
+import io.sprucehill.zalando.api.exception.NotFoundException;
 import io.sprucehill.zalando.api.nativecart.model.Address;
 import io.sprucehill.zalando.api.nativecart.model.AddressCheckResponse;
+import io.sprucehill.zalando.api.service.AbstractService;
 
 /**
  * 
@@ -18,19 +21,19 @@ import io.sprucehill.zalando.api.nativecart.model.AddressCheckResponse;
 public class AddressService extends AbstractService implements IAddressService {
 
 	@Override
-	public List<Address> read(String customerNumber) {
+	public List<Address> read(String customerNumber) throws Exception {
 		HttpGet request = getRequest("/customers/" + customerNumber +"/addresses");
 		return execute(request, new TypeReference<List<Address>>() {});
 	}
 
 	@Override
-	public Address read(String customerNumber, String addressId) {
+	public Address read(String customerNumber, String addressId) throws Exception {
 		HttpGet request = getRequest("/customers/" + customerNumber +"/addresses/"+addressId);
 		return execute(request, new TypeReference<Address>() {});
 	}
 
 	@Override
-	public Address update(String customerNumber, String addressId, Address updateAddressRequest) {
+	public Address update(String customerNumber, String addressId, Address updateAddressRequest) throws Exception {
 		HttpPut request = putRequest("/customers/" + customerNumber +"/addresses/"+addressId);
 		
 		try {
@@ -43,13 +46,13 @@ public class AddressService extends AbstractService implements IAddressService {
 	}
 
 	@Override
-	public Address create(String customerNumber, Address createAddressRequest) {
+	public Address create(String customerNumber, Address createAddressRequest) throws Exception {
 		HttpGet request = getRequest("/customers/" + customerNumber+"/addresses");
 		return execute(request, new TypeReference<Address>() {});
 	}
 
 	@Override
-	public AddressCheckResponse checkAddress(Address checkAddressRequest) {
+	public AddressCheckResponse checkAddress(Address checkAddressRequest) throws Exception {
 		HttpPost request = postRequest("/addresses");
 		try {
 			request.setEntity(new StringEntity(objectMapper.writeValueAsString(checkAddressRequest)));
