@@ -22,6 +22,7 @@ public class CartService extends AbstractService implements ICartService {
 
 		try {
 			request.addHeader(HttpHeaders.AUTHORIZATION,"Bearer "+accessToken);
+			request.addHeader("Content-Type","application/x.zalando.cart.create+json");
 			request.setEntity(new StringEntity(objectMapper.writeValueAsString(createCartRequest)));
 		}catch(Throwable t) {
 			logger.warn(t.getMessage());
@@ -33,6 +34,7 @@ public class CartService extends AbstractService implements ICartService {
 	@Override
 	public Cart read(String access_token, String cart_id) throws Exception {
 		HttpGet request = getRequest("/carts/" + cart_id);
+		request.addHeader("Content-Type","application/x.zalando.cart+json");
 		request.addHeader(HttpHeaders.AUTHORIZATION,"Bearer "+access_token);
 		return execute(request, new TypeReference<Cart>() {});
 	}
@@ -43,6 +45,7 @@ public class CartService extends AbstractService implements ICartService {
 
 		try {
 			request.addHeader(HttpHeaders.AUTHORIZATION,"Bearer "+access_token);
+			request.addHeader("Content-Type","application/x.zalando.cart.update+json");
 			request.setEntity(new StringEntity(objectMapper.writeValueAsString(updateCartRequest)));
 		}catch(Throwable t) {
 			logger.warn(t.getMessage());

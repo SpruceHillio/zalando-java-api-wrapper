@@ -15,14 +15,14 @@ public interface IAddressService {
 	 * @param checkAddressRequest The address object to be checked
 	 * @return The address object with normalized address
 	 */
-	AddressCheckResponse checkAddress(Address checkAddressRequest) throws Exception;
+	AddressCheckResponse checkAddress(String accessToken,Address checkAddressRequest) throws Exception;
 
 	/**
 	 * 
 	 * @param customerNumber The customer unique id
 	 * @return The list of user addresses
 	 */
-	List<Address> read(String customerNumber) throws Exception ;
+	List<Address> read(String accessToken,String customerNumber) throws Exception ;
 
 	/**
 	 * 
@@ -30,7 +30,7 @@ public interface IAddressService {
 	 * @param addressId  The ID of the address to read
 	 * @return The address with the requested ID for the specified customer
 	 */
-	Address read(String customerNumber,String addressId) throws Exception;
+	Address read(String accessToken,String customerNumber,String addressId) throws Exception;
 
 	/**
 	 * 
@@ -39,7 +39,7 @@ public interface IAddressService {
 	 * @param request The address object to update
 	 * @return The updated address object
 	 */
-	Address update(String customerNumber,String addressId,Address request) throws Exception;
+	Address update(String accessToken,String customerNumber,String addressId,Address request) throws Exception;
 
 	/**
 	 * 	
@@ -47,5 +47,5 @@ public interface IAddressService {
 	 * @param createAddressRequest The address object to create
 	 * @return Newly created address object
 	 */
-	Address create(String customerNumber,Address createAddressRequest) throws Exception;
+	Address create(String accessToken,String customerNumber,Address createAddressRequest) throws Exception;
 }

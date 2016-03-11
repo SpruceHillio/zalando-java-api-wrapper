@@ -2,6 +2,8 @@ package io.sprucehill.zalando.api.nativecart.service;
 
 import org.apache.http.client.methods.HttpGet;
 import com.fasterxml.jackson.core.type.TypeReference;
+
+import io.sprucehill.zalando.api.nativecart.model.TokenInfo;
 import io.sprucehill.zalando.api.service.AbstractService;
 
 /**
@@ -15,5 +17,11 @@ public class AccessTokenService extends AbstractService implements IAccessTokenS
 	public String read() throws Exception {
 		HttpGet request = getRequest("https://token.services.auth.zalando.com/oauth2/access_token?realm=/external-services");
 		return execute(request, new TypeReference<String>() {});
+	}
+	
+	@Override
+	public TokenInfo read(String accessToken) throws Exception {
+		HttpGet request = new HttpGet("https://atlas-openam-staging.dc.zalan.do/openam/oauth2/tokeninfo?access_token="+accessToken);
+		return execute(request, new TypeReference<TokenInfo>() {});
 	}
 }
