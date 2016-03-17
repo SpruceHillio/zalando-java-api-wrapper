@@ -25,10 +25,9 @@ public class AccessTokenService extends AbstractService implements IAccessTokenS
 	@Override
 	public TokenInfo read() throws Exception {
 		HttpPost request = postRequest("/access_token");
-		request.setHeader(HttpHeaders.CONTENT_TYPE,"application/x-www-form-urlencoded");
 		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("realm","%2Fcustomers"));
+		params.add(new BasicNameValuePair("realm","/customers"));
 		params.add(new BasicNameValuePair("grant_type","client_credentials"));
 		params.add(new BasicNameValuePair("client_id",clientId));
 		params.add(new BasicNameValuePair("client_secret",clientCredential));
@@ -40,14 +39,15 @@ public class AccessTokenService extends AbstractService implements IAccessTokenS
 	
 	@Override
 	public TokenInfo readFromAuthorizationCode(String authCode,String redirectUrl) throws Exception {
-		HttpPost request = postRequest("/access_token?realm=%2Fcustomers&grant_type=authorization_code&client_id="+clientId+"&client_secret="+clientCredential+"&code="+authCode+"&redirect_uri="+redirectUrl);
-		request.setHeader(HttpHeaders.CONTENT_TYPE,"application/x-www-form-urlencoded");
+		HttpPost request = postRequest("/access_token");
 		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("realm","%2Fcustomers"));
+		params.add(new BasicNameValuePair("realm","/customers"));
 		params.add(new BasicNameValuePair("grant_type","authorization_code"));
 		params.add(new BasicNameValuePair("client_id",clientId));
 		params.add(new BasicNameValuePair("client_secret",clientCredential));
+		params.add(new BasicNameValuePair("code",authCode));
+		params.add(new BasicNameValuePair("redirect_uri",redirectUrl));
 		
 		request.setEntity(new UrlEncodedFormEntity(params));
 		
