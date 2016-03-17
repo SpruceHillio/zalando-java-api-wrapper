@@ -14,6 +14,7 @@ public interface ICartService {
 	 * @param accessToken access token for performing create cart operation
 	 * @param createCartRequest The Cart object to be created
 	 * @return Newly created cart object
+	 * @throws Exception Any Exception that is thrown while doing the operation
 	 */
 	Cart create(String accessToken,Cart createCartRequest) throws Exception;
 	
@@ -22,6 +23,7 @@ public interface ICartService {
 	 * @param accessToken access token for performing create cart operation
 	 * @param cartId The ID of the cart to read
 	 * @return The cart with the requested ID for the specified accessToken
+	 * @throws Exception Any Exception that is thrown while doing the operation
 	 */
 	Cart read(String accessToken,String cartId) throws Exception;
 	
@@ -30,7 +32,8 @@ public interface ICartService {
 	 * @param accessToken access token for performing update cart operation
 	 * @param cartId The ID of the cart to update
 	 * @param updateCartRequest Cart object to be updated
-	 * @return
+	 * @return The updated Cart object
+	 * @throws Exception Any Exception that is thrown while doing the operation
 	 */
 	Cart update(String accessToken,String cartId,Cart updateCartRequest) throws Exception;
 }
