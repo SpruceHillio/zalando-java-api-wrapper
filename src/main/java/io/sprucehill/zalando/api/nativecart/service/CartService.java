@@ -21,9 +21,8 @@ public class CartService extends AbstractService implements ICartService {
 		HttpPost request = postRequest("/carts");
 
 		try {
-			
 			request.addHeader(HttpHeaders.AUTHORIZATION,"Bearer "+accessToken);
-			request.addHeader("Content-Type","application/x.zalando.cart.create+json");
+			request.addHeader(HttpHeaders.CONTENT_TYPE,"application/x.zalando.cart.create+json");
 			request.setEntity(new ByteArrayEntity(objectMapper.writeValueAsBytes(createCartRequest)));
 		}catch(Throwable t) {
 			logger.warn(t.getMessage());
@@ -35,7 +34,7 @@ public class CartService extends AbstractService implements ICartService {
 	@Override
 	public Cart read(String access_token, String cart_id) throws Exception {
 		HttpGet request = getRequest("/carts/" + cart_id);
-		request.addHeader("Content-Type","application/x.zalando.cart+json");
+		request.addHeader(HttpHeaders.CONTENT_TYPE,"application/x.zalando.cart+json");
 		request.addHeader(HttpHeaders.AUTHORIZATION,"Bearer "+access_token);
 		return execute(request, new TypeReference<Cart>() {});
 	}
@@ -46,7 +45,7 @@ public class CartService extends AbstractService implements ICartService {
 
 		try {
 			request.addHeader(HttpHeaders.AUTHORIZATION,"Bearer "+access_token);
-			request.addHeader("Content-Type","application/x.zalando.cart.items.update+json");
+			request.addHeader(HttpHeaders.CONTENT_TYPE,"application/x.zalando.cart.items.update+json");
 			request.setEntity(new ByteArrayEntity(objectMapper.writeValueAsBytes(updateCartRequest.getItems())));
 			return execute(request, new TypeReference<Cart>() {});
 			
