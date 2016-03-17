@@ -3,7 +3,7 @@ package io.sprucehill.zalando.api.nativecart.service;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.ByteArrayEntity;
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.sprucehill.zalando.api.nativecart.model.Checkout;
 import io.sprucehill.zalando.api.service.AbstractService;
@@ -26,7 +26,7 @@ public class CheckoutService extends AbstractService implements ICheckoutService
 		HttpPost request = postRequest("/customer/"+customerNumber+"/checkouts");
 
 		try {
-			request.setEntity(new StringEntity(objectMapper.writeValueAsString(createcheckoutRequest)));
+			request.setEntity(new ByteArrayEntity(objectMapper.writeValueAsBytes(createcheckoutRequest)));
 		}catch (Throwable t) {
 			logger.warn(t.getMessage());
 			throw new RuntimeException(t);
@@ -39,7 +39,7 @@ public class CheckoutService extends AbstractService implements ICheckoutService
 		HttpPut request = putRequest("/customer/"+customerNumber+"/checkouts/"+checkoutId);
 
 		try {
-			request.setEntity(new StringEntity(objectMapper.writeValueAsString(updateCheckoutRequest)));
+			request.setEntity(new ByteArrayEntity(objectMapper.writeValueAsBytes(updateCheckoutRequest)));
 		}catch (Throwable t) {
 			logger.warn(t.getMessage());
 			throw new RuntimeException(t);

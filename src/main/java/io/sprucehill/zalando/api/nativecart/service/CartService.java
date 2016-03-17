@@ -4,7 +4,7 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.ByteArrayEntity;
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.sprucehill.zalando.api.nativecart.model.Cart;
 import io.sprucehill.zalando.api.service.AbstractService;
@@ -24,7 +24,7 @@ public class CartService extends AbstractService implements ICartService {
 			
 			request.addHeader(HttpHeaders.AUTHORIZATION,"Bearer "+accessToken);
 			request.addHeader("Content-Type","application/x.zalando.cart.create+json");
-			request.setEntity(new StringEntity(objectMapper.writeValueAsString(createCartRequest)));
+			request.setEntity(new ByteArrayEntity(objectMapper.writeValueAsBytes(createCartRequest)));
 		}catch(Throwable t) {
 			logger.warn(t.getMessage());
 			throw new RuntimeException(t);
@@ -47,7 +47,7 @@ public class CartService extends AbstractService implements ICartService {
 		try {
 			request.addHeader(HttpHeaders.AUTHORIZATION,"Bearer "+access_token);
 			request.addHeader("Content-Type","application/x.zalando.cart.items.update+json");
-			request.setEntity(new StringEntity(objectMapper.writeValueAsString(updateCartRequest.getItems())));
+			request.setEntity(new ByteArrayEntity(objectMapper.writeValueAsBytes(updateCartRequest.getItems())));
 			return execute(request, new TypeReference<Cart>() {});
 			
 		}catch(Throwable t) {
