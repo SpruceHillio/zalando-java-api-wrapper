@@ -11,15 +11,24 @@ public interface IAccessTokenService {
 	
 	/**
 	 *
-	 * @return access token
+	 * @return Access token 
 	 */
-	String read() throws Exception;
+	TokenInfo read() throws Exception;
 	
 	/**
 	 * 
 	 * @param accessToken
-	 * @return
+	 * @return Token details for the given accessToken
 	 * @throws Exception
 	 */
 	TokenInfo read(String accessToken) throws Exception;
+
+	/**
+	 * 
+	 * @param authCode authorization code 
+	 * @param redirectUrl The redirect url to receive callnack
+	 * @return Token details for the given authorization code
+	 * @throws Exception
+	 */
+	TokenInfo readFromAuthorizationCode(String authCode, String redirectUrl) throws Exception;
 }

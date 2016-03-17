@@ -13,8 +13,9 @@ import io.sprucehill.zalando.api.service.AbstractService;
 public class CustomerService extends AbstractService implements ICustomerService {
 
 	@Override
-	public Customer read(String customerNumber)  throws Exception {
+	public Customer read(String accessToken ,String customerNumber)  throws Exception {
 		HttpGet request = getRequest("/customers/" + customerNumber);
+		request.addHeader("Authorization","Bearer "+accessToken);
 		return execute(request, new TypeReference<Customer>() {});
 	}
 }

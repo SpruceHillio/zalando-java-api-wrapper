@@ -2,6 +2,7 @@ package io.sprucehill.zalando.api.nativecart.service;
 
 import java.util.List;
 import io.sprucehill.zalando.api.nativecart.model.Address;
+import io.sprucehill.zalando.api.nativecart.model.AddressCheckRequest;
 import io.sprucehill.zalando.api.nativecart.model.AddressCheckResponse;
 
 /**
@@ -15,7 +16,7 @@ public interface IAddressService {
 	 * @param checkAddressRequest The address object to be checked
 	 * @return The address object with normalized address
 	 */
-	AddressCheckResponse checkAddress(String accessToken,Address checkAddressRequest) throws Exception;
+	AddressCheckResponse checkAddress(String accessToken,AddressCheckRequest checkAddressRequest) throws Exception;
 
 	/**
 	 * 

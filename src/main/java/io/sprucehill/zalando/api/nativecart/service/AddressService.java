@@ -5,9 +5,10 @@ import java.util.List;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
-import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.ByteArrayEntity;
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.sprucehill.zalando.api.nativecart.model.Address;
+import io.sprucehill.zalando.api.nativecart.model.AddressCheckRequest;
 import io.sprucehill.zalando.api.nativecart.model.AddressCheckResponse;
 import io.sprucehill.zalando.api.service.AbstractService;
 
@@ -39,7 +40,7 @@ public class AddressService extends AbstractService implements IAddressService {
 		try {
 			request.setHeader("Authorization","Bearer "+accessToken);
 			request.addHeader("Content-Type","application/x.zalando.customer.address.update+json");
-			request.setEntity(new StringEntity(objectMapper.writeValueAsString(updateAddressRequest)));
+			request.setEntity(new ByteArrayEntity(objectMapper.writeValueAsBytes(updateAddressRequest)));
 		}catch(Throwable t) {
 			logger.warn(t.getMessage());
 			throw new RuntimeException(t);
@@ -49,19 +50,20 @@ public class AddressService extends AbstractService implements IAddressService {
 
 	@Override
 	public Address create(String accessToken,String customerNumber, Address createAddressRequest) throws Exception {
-		HttpGet request = getRequest("/customers/" + customerNumber+"/addresses");
+		HttpPost request = postRequest("/customers/" + customerNumber+"/addresses");
 		request.setHeader("Authorization","Bearer "+accessToken);
 		request.addHeader("Content-Type","application/x.zalando.customer.address.create+json");
+		request.setEntity(new ByteArrayEntity(objectMapper.writeValueAsBytes(createAddressRequest)));
 		return execute(request, new TypeReference<Address>() {});
 	}
 
 	@Override
-	public AddressCheckResponse checkAddress(String accessToken,Address checkAddressRequest) throws Exception {
-		HttpPost request = postRequest("/addresses");
+	public AddressCheckResponse checkAddress(String accessToken,AddressCheckRequest checkAddressRequest) throws Exception {
+		HttpPost request = postRequest("/address-checks");
 		try {
 			request.setHeader("Authorization","Bearer "+accessToken);
 			request.addHeader("Content-Type","application/x.zalando.address-check.create+json");
-			request.setEntity(new StringEntity(objectMapper.writeValueAsString(checkAddressRequest)));
+			request.setEntity(new ByteArrayEntity(objectMapper.writeValueAsBytes(checkAddressRequest)));
 		}catch(Throwable t) {
 			logger.warn(t.getMessage());
 			throw new RuntimeException(t);

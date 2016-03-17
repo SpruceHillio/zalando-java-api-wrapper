@@ -14,5 +14,5 @@ public interface ICustomerService {
 	 * @param customerNumber  The customer unique id
 	 * @return Details of the customer with specified customer_number
 	 */
-	Customer read(String customerNumber) throws Exception;
+	Customer read(String accessToken,String customerNumber) throws Exception;
 }

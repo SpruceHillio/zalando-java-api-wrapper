@@ -64,6 +64,7 @@ public class Address extends Base {
 		this.packStation=packStation;
 		this.defaultBilling=defaultBilling;
 		this.defaultShipping=defaultShipping;
+		this.zip = zip;
 	}
 	
 	public String getId() {

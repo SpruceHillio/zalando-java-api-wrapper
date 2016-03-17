@@ -21,7 +21,7 @@ public class Cart extends Base {
 	@JsonProperty
 	private List<Items> items = new ArrayList<Items>();
 	
-	@JsonProperty
+	@JsonProperty(value="items_out_of_stock")
 	private List<String> itemsOutOfStock = new ArrayList<String>();
 	
 	@JsonProperty
@@ -33,7 +33,7 @@ public class Cart extends Base {
 	@JsonProperty
 	private Money taxTotal;
 	
-	@JsonProperty
+	@JsonProperty(value="cart_url")
 	private String cartUrl;
 	
 	public Cart() {}
