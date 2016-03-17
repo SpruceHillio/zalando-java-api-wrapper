@@ -57,9 +57,9 @@ public abstract class AbstractService {
 	}
 
 	/**
-	 * Set a client clientCredentials
+	 * Set a client clientCredential
 	 *
-	 * @param clientCredentials    The client secret of the app 
+	 * @param clientCredential  The client secret of the app 
 	 */
 	public void setClientCredential(String clientCredential) {
 		this.clientCredential = clientCredential;
@@ -246,7 +246,7 @@ public abstract class AbstractService {
 	 * @param typeReference    The type of the expected response
 	 * @param <T>              Generic method to request different response data
 	 * @return                 The response data for the request
-	 * @throws ZalandoException    This exception is thrown when a status other then 200 is encountered
+	 * @throws NotFoundException    This exception is thrown when a resource is not found
 	 */
 	protected <T> T execute(HttpRequestBase request, TypeReference<T> typeReference) throws NotFoundException {
 		try {

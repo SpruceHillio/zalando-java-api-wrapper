@@ -13,6 +13,7 @@ import io.sprucehill.zalando.api.nativecart.model.AddressCheckResponse;
 public interface IAddressService {
 	/**
 	 * 
+	 * @param accessToken The access token for authorization
 	 * @param checkAddressRequest The address object to be checked
 	 * @return The address object with normalized address
 	 * @throws Exception Any Exception that is thrown while doing the operation
@@ -21,6 +22,7 @@ public interface IAddressService {
 
 	/**
 	 * 
+	 * @param accessToken The access token for authorization
 	 * @param customerNumber The customer unique id
 	 * @return The list of user addresses
 	 * @throws Exception Any Exception that is thrown while doing the operation
@@ -29,6 +31,7 @@ public interface IAddressService {
 
 	/**
 	 * 
+	 * @param accessToken The access token for authorization
 	 * @param customerNumber The customer unique id
 	 * @param addressId  The ID of the address to read
 	 * @return The address with the requested ID for the specified customer
@@ -38,6 +41,7 @@ public interface IAddressService {
 
 	/**
 	 * 
+	 * @param accessToken The access token for authorization
 	 * @param customerNumber The customer unique id
 	 * @param addressId The ID of the address to update
 	 * @param request The address object to update
@@ -48,6 +52,7 @@ public interface IAddressService {
 
 	/**
 	 * 	
+	 * @param accessToken The access token for authorization
 	 * @param customerNumber The customer unique id
 	 * @param createAddressRequest The address object to create
 	 * @return Newly created address object

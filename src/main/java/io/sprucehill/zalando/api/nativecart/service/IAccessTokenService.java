@@ -19,7 +19,7 @@ public interface IAccessTokenService {
 	
 	/**
 	 * 
-	 * @param accessToken
+	 * @param accessToken The access token for authorization
 	 * @return Token details for the given accessToken
 	 * @throws Exception Any Exception that is thrown while doing the operation
 	 */
