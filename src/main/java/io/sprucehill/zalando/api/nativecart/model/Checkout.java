@@ -22,7 +22,7 @@ public  class Checkout extends Base {
 	@JsonProperty(value="billing_address_id")
 	private String billingAddressId;	
 
-	@JsonProperty(value="billing_address_id")
+	@JsonProperty(value="shipping_address_id")
 	private String shippingAddressId;	
 
 	@JsonProperty

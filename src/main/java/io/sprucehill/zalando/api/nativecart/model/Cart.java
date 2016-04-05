@@ -15,7 +15,7 @@ public class Cart extends Base {
 	@JsonProperty
 	private String id;
 	
-	@JsonProperty(value="app_domain_id")
+	@JsonProperty(value="sales_channel")
 	private String appDomainId;
 	
 	@JsonProperty

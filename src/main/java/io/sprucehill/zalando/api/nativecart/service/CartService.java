@@ -24,11 +24,11 @@ public class CartService extends AbstractService implements ICartService {
 			request.addHeader(HttpHeaders.AUTHORIZATION,"Bearer "+accessToken);
 			request.addHeader(HttpHeaders.CONTENT_TYPE,"application/x.zalando.cart.create+json");
 			request.setEntity(new ByteArrayEntity(objectMapper.writeValueAsBytes(createCartRequest)));
+			return execute(request, new TypeReference<Cart>() {});
 		}catch(Throwable t) {
 			logger.warn(t.getMessage());
 			throw new RuntimeException(t);
 		}
-		return execute(request, new TypeReference<Cart>() {});
 	}
 
 	@Override
@@ -48,7 +48,6 @@ public class CartService extends AbstractService implements ICartService {
 			request.addHeader(HttpHeaders.CONTENT_TYPE,"application/x.zalando.cart.items.update+json");
 			request.setEntity(new ByteArrayEntity(objectMapper.writeValueAsBytes(updateCartRequest.getItems())));
 			return execute(request, new TypeReference<Cart>() {});
-			
 		}catch(Throwable t) {
 			logger.warn(t.getMessage());
 			throw new RuntimeException(t);
