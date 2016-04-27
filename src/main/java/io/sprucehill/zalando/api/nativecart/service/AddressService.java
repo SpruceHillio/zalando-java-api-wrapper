@@ -22,21 +22,21 @@ public class AddressService extends AbstractService implements IAddressService {
 
 	@Override
 	public List<Address> read(String accessToken,String customerNumber) throws Exception {
-		HttpGet request = getRequest("/customers/" + customerNumber +"/addresses");
+		HttpGet request = getRequest("/addresses");
 		request.setHeader(HttpHeaders.AUTHORIZATION,"Bearer "+accessToken);
 		return execute(request, new TypeReference<List<Address>>() {});
 	}
 
 	@Override
 	public Address read(String accessToken,String customerNumber, String addressId) throws Exception {
-		HttpGet request = getRequest("/customers/" + customerNumber +"/addresses/"+addressId);
+		HttpGet request = getRequest("/addresses/"+addressId);
 		request.setHeader(HttpHeaders.AUTHORIZATION,"Bearer "+accessToken);
 		return execute(request, new TypeReference<Address>() {});
 	}
 
 	@Override
 	public Address update(String accessToken,String customerNumber, String addressId, Address updateAddressRequest) throws Exception {
-		HttpPut request = putRequest("/customers/" + customerNumber +"/addresses/"+addressId);
+		HttpPut request = putRequest("/addresses/"+addressId);
 		
 		try {
 			request.setHeader(HttpHeaders.AUTHORIZATION,"Bearer "+accessToken);
@@ -51,7 +51,7 @@ public class AddressService extends AbstractService implements IAddressService {
 
 	@Override
 	public Address create(String accessToken,String customerNumber, Address createAddressRequest) throws Exception {
-		HttpPost request = postRequest("/customers/" + customerNumber+"/addresses");
+		HttpPost request = postRequest("/addresses");
 		request.setHeader(HttpHeaders.AUTHORIZATION,"Bearer "+accessToken);
 		request.addHeader(HttpHeaders.CONTENT_TYPE,"application/x.zalando.customer.address.create+json");
 		request.setEntity(new ByteArrayEntity(objectMapper.writeValueAsBytes(createAddressRequest)));

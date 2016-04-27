@@ -16,7 +16,7 @@ public class OrderService extends AbstractService implements IOrderService {
 
 	@Override
 	public Order create(String accessToken,String customerNumber, Order createOrderRequest) throws Exception {
-		HttpPost request = postRequest("/customers/" + customerNumber +"/orders");
+		HttpPost request = postRequest("/orders");
 		request.addHeader(HttpHeaders.AUTHORIZATION,"Bearer "+accessToken);
 		request.addHeader(HttpHeaders.CONTENT_TYPE,"application/x.zalando.customer.order.create+json");
 		try {

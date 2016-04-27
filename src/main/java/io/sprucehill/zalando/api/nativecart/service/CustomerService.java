@@ -15,7 +15,7 @@ public class CustomerService extends AbstractService implements ICustomerService
 
 	@Override
 	public Customer read(String accessToken ,String customerNumber)  throws Exception {
-		HttpGet request = getRequest("/customers/" + customerNumber);
+		HttpGet request = getRequest("/customer");
 		request.addHeader(HttpHeaders.AUTHORIZATION,"Bearer "+accessToken);
 		return execute(request, new TypeReference<Customer>() {});
 	}
