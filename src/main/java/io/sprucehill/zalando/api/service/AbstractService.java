@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.sprucehill.zalando.api.exception.NotFoundException;
 import io.sprucehill.zalando.api.model.Domain;
+import io.sprucehill.zalando.api.nativecart.model.Problem;
+
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -23,268 +25,307 @@ import java.net.URISyntaxException;
  */
 public abstract class AbstractService {
 
-    String apiBase = "https://api.zalando.com";
+	String apiBase = "https://api.zalando.com";
 
-    String scheme;
+	String scheme;
 
-    String host;
+	String host;
 
-    Integer port;
+	Integer port;
 
-    String pathPrefix;
+	String pathPrefix;
 
-    protected Domain defaultDomain;
+	protected Domain defaultDomain;
 
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected HttpClient httpClient;
+	protected HttpClient httpClient;
 
-    protected ObjectMapper objectMapper;
+	protected ObjectMapper objectMapper;
 
-    /**
-     * Set a different API base
-     *
-     * @param apiBase    The API base to use; defaults to 'https://api.zalando.com'
-     */
-    public void setApiBase(String apiBase) {
-        this.apiBase = apiBase;
-    }
+	protected String clientId;
 
-    /**
-     * Set the default domain to use; this is a mandatory setter to be called
-     *
-     * @param defaultDomain    The default shop domain to use
-     */
-    public void setDefaultDomain(Domain defaultDomain) {
-        this.defaultDomain = defaultDomain;
-    }
+	protected String clientCredential;
 
-    /**
-     * Set a custom HttpClient to use; the bean will create a default HttpClient on its postConstruct method if no HttpClient has been set previously.
-     * You might want to set your custom HttpClient as the default implementation does not use any pooling or threading implementation.
-     *
-     * @param httpClient    The HttpClient to use.
-     */
-    public void setHttpClient(HttpClient httpClient) {
-        this.httpClient = httpClient;
-    }
+	/**
+	 * Set a client Id
+	 *
+	 * @param clientId    The clientId of the app 
+	 */
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
+	}
 
-    /**
-     * Set a custom ObjectMapper to use; the bean will create a default ObjectMapper on its postConstruct method if no ObjectMapper has been set previously.
-     *
-     * @param objectMapper    The ObjectMapper to use.
-     */
-    public void setObjectMapper(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
+	/**
+	 * Set a client clientCredential
+	 *
+	 * @param clientCredential  The client secret of the app 
+	 */
+	public void setClientCredential(String clientCredential) {
+		this.clientCredential = clientCredential;
+	}
 
-    /**
-     * Call this method on postConstruct for any subclasses as it takes care to initialize the bean
-     */
-    @PostConstruct
-    public void postConstruct() {
-        if (null == httpClient) {
-            httpClient = HttpClientBuilder.create().build();
-        }
-        if (null == objectMapper) {
-            objectMapper = new ObjectMapper();
-        }
-        if (null == defaultDomain) {
-            throw new RuntimeException("'defaultDomain' must be set!");
-        }
-        if (null == apiBase) {
-            throw new RuntimeException("'apiBase' must be set!");
-        }
-        try {
-            URI uri = new URI(apiBase);
-            scheme = uri.getScheme();
-            host = uri.getHost();
-            port = uri.getPort();
-            pathPrefix = uri.getPath();
-            if (("https".equalsIgnoreCase(scheme) && 443 == port) || ("http".equalsIgnoreCase(scheme) && 80 == port)) {
-                port = null;
-            }
-            if ("/".equalsIgnoreCase(pathPrefix)) {
-                pathPrefix = null;
-            }
-            else if (pathPrefix.endsWith("/")) {
-                pathPrefix = pathPrefix.substring(0,pathPrefix.length()-1);
-            }
-        }
-        catch (URISyntaxException e) {
-            throw new RuntimeException("'apiBase' is invalid");
-        }
-    }
+	/**
+	 * Set a different API base
+	 *
+	 * @param apiBase    The API base to use; defaults to 'https://api.zalando.com'
+	 */
+	public void setApiBase(String apiBase) {
+		this.apiBase = apiBase;
+	}
 
-    /**
-     * Create and initialize a GET request for the specified path
-     *
-     * @param path    The path of the GET request
-     * @return        A HttpGet object for the specified path
-     */
-    HttpGet getRequest(String path) {
-        return enrich(new HttpGet(normalizePath(path)));
-    }
+	/**
+	 * Set the default domain to use; this is a mandatory setter to be called
+	 *
+	 * @param defaultDomain    The default shop domain to use
+	 */
+	public void setDefaultDomain(Domain defaultDomain) {
+		this.defaultDomain = defaultDomain;
+	}
 
-    /**
-     * Create an initialize a GET request for the specified URIBuilder
-     *
-     * @param uriBuilder    The URIBuilder to work upon
-     * @return              A HttGet object for the specified URIBuilder's URI
-     * @throws URISyntaxException   Throw if URI cannot be built from the supplied URIBuilder
-     */
-    HttpGet getRequest(URIBuilder uriBuilder) throws URISyntaxException {
-        return enrich(new HttpGet(normalize(uriBuilder)));
-    }
+	/**
+	 * Set a custom HttpClient to use; the bean will create a default HttpClient on its postConstruct method if no HttpClient has been set previously.
+	 * You might want to set your custom HttpClient as the default implementation does not use any pooling or threading implementation.
+	 *
+	 * @param httpClient    The HttpClient to use.
+	 */
+	public void setHttpClient(HttpClient httpClient) {
+		this.httpClient = httpClient;
+	}
 
-    /**
-     * Create and initialize a POST request for the specified path
-     *
-     * @param path    The path of the POST request
-     * @return        A HttpGet object for the specified path
-     */
-    HttpPost postRequest(String path) {
-        return enrich(new HttpPost(normalizePath(path)));
-    }
+	/**
+	 * Set a custom ObjectMapper to use; the bean will create a default ObjectMapper on its postConstruct method if no ObjectMapper has been set previously.
+	 *
+	 * @param objectMapper    The ObjectMapper to use.
+	 */
+	public void setObjectMapper(ObjectMapper objectMapper) {
+		this.objectMapper = objectMapper;
+	}
 
-    /**
-     * Create and initialize a PUT request for the specified path
-     *
-     * @param path    The path of the PUT request
-     * @return        A HttpGet object for the specified path
-     */
-    HttpPut putRequest(String path) {
-        return enrich(new HttpPut(normalizePath(path)));
-    }
+	/**
+	 * Call this method on postConstruct for any subclasses as it takes care to initialize the bean
+	 */
+	@PostConstruct
+	public void postConstruct() {
+		if (null == httpClient) {
+			httpClient = HttpClientBuilder.create().build();
+		}
+		if (null == objectMapper) {
+			objectMapper = new ObjectMapper();
+		}
+		if (null == defaultDomain) {
+			throw new RuntimeException("'defaultDomain' must be set!");
+		}
+		if (null == apiBase) {
+			throw new RuntimeException("'apiBase' must be set!");
+		}
+		try {
+			URI uri = new URI(apiBase);
+			scheme = uri.getScheme();
+			host = uri.getHost();
+			port = uri.getPort();
+			pathPrefix = uri.getPath();
+			if (("https".equalsIgnoreCase(scheme) && 443 == port) || ("http".equalsIgnoreCase(scheme) && 80 == port)) {
+				port = null;
+			}
+			if ("/".equalsIgnoreCase(pathPrefix)) {
+				pathPrefix = null;
+			}
+			else if (pathPrefix.endsWith("/")) {
+				pathPrefix = pathPrefix.substring(0,pathPrefix.length()-1);
+			}
+		}
+		catch (URISyntaxException e) {
+			throw new RuntimeException("'apiBase' is invalid");
+		}
+	}
 
-    /**
-     * Create and initialize a DELETE request for the specified path
-     *
-     * @param path    The path of the DELETE request
-     * @return        A HttpGet object for the specified path
-     */
-    HttpDelete deleteRequest(String path) {
-        return enrich(new HttpDelete(normalizePath(path)));
-    }
+	/**
+	 * Create and initialize a GET request for the specified path
+	 *
+	 * @param path    The path of the GET request
+	 * @return        A HttpGet object for the specified path
+	 */
+	protected HttpGet getRequest(String path) {
+		return enrich(new HttpGet(normalizePath(path)));
+	}
 
-    /**
-     * Helper method to normalize a supplied path;
-     * the current implementation only append a '/' if none is present and prefix with API Base
-     *
-     * @param path    The path to normalize
-     * @return        The normalized path
-     */
-    protected String normalizePath(String path) {
-        if (!path.startsWith("/")) {
-            path = "/" + path;
-        }
-        return apiBase + path;
-    }
+	/**
+	 * Create an initialize a GET request for the specified URIBuilder
+	 *
+	 * @param uriBuilder    The URIBuilder to work upon
+	 * @return              A HttGet object for the specified URIBuilder's URI
+	 * @throws URISyntaxException   Throw if URI cannot be built from the supplied URIBuilder
+	 */
+	HttpGet getRequest(URIBuilder uriBuilder) throws URISyntaxException {
+		return enrich(new HttpGet(normalize(uriBuilder)));
+	}
 
-    /**
-     * Helper method to normalize a supplied path;
-     * the current implementation will set scheme, host, port and prefix with pathPrefix if present
-     *
-     * @param uriBuilder    The URIBuilder to work upon
-     * @return              A normalized path with defaults set if necessary
-     * @throws URISyntaxException   Throw if the URL cannot be built
-     */
-    protected String normalize(URIBuilder uriBuilder) throws URISyntaxException {
-        if (null == uriBuilder.getHost() || null == uriBuilder.getScheme()) {
-            uriBuilder.setHost(host);
-            uriBuilder.setScheme(scheme);
-            if (null != port) {
-                uriBuilder.setPort(port);
-            }
-            if (null != pathPrefix) {
-                uriBuilder.setPath(pathPrefix + uriBuilder.getPath());
-            }
-        }
-        return uriBuilder.build().toString();
-    }
+	/**
+	 * Create and initialize a POST request for the specified path
+	 *
+	 * @param path    The path of the POST request
+	 * @return        A HttpGet object for the specified path
+	 */
+	protected HttpPost postRequest(String path) {
+		return enrich(new HttpPost(normalizePath(path)));
+	}
 
-    /**
-     * Enrich a HttpRequest with some default stuff;
-     * the current implementation does nothing here
-     *
-     * @param request    The request to enrich
-     * @param <T>        Generic method to handle different types of HttpRequests
-     * @return           The supplied HttpRequest object
-     */
-    protected <T extends HttpRequestBase> T enrich(T request) {
-        return request;
-    }
+	/**
+	 * Create and initialize a PUT request for the specified path
+	 *
+	 * @param path    The path of the PUT request
+	 * @return        A HttpGet object for the specified path
+	 */
+	protected HttpPut putRequest(String path) {
+		return enrich(new HttpPut(normalizePath(path)));
+	}
 
-    /**
-     * Execute a HttpRequest and handle common response states.
-     *
-     * @param request          The HttpRequest to execute
-     * @param typeReference    The type of the expected response
-     * @param <T>              Generic method to request different response data
-     * @return                 The response data for the request
-     * @throws NotFoundException    This exception is thrown when a 404 status code is encountered on the response
-     */
-    protected <T> T execute(HttpRequestBase request, TypeReference<T> typeReference) throws NotFoundException {
-        try {
-            if (null == request.getHeaders(HttpHeaders.ACCEPT_LANGUAGE)) {
-                request.addHeader(HttpHeaders.ACCEPT_LANGUAGE,defaultDomain.getLocale());
-            }
-            HttpResponse httpResponse = httpClient.execute(request);
-            if (200 == httpResponse.getStatusLine().getStatusCode()) {
-                return objectMapper.readValue(httpResponse.getEntity().getContent(),typeReference);
-            }
-            if (404 == httpResponse.getStatusLine().getStatusCode()) {
-                throw new NotFoundException(httpResponse.getStatusLine().getReasonPhrase());
-            }
-            else {
-                throw new RuntimeException("StatusCode: "+httpResponse.getStatusLine().getStatusCode() + ", Reason: " + httpResponse.getStatusLine().getReasonPhrase());
-            }
-        }
-        catch (IOException e) {
-            logger.error(e.getMessage(), e);
-            throw new RuntimeException(e);
-        }
-        finally {
-            if (null != request && !request.isAborted()) {
-                request.abort();
-            }
-        }
-    }
+	/**
+	 * Create and initialize a DELETE request for the specified path
+	 *
+	 * @param path    The path of the DELETE request
+	 * @return        A HttpGet object for the specified path
+	 */
+	HttpDelete deleteRequest(String path) {
+		return enrich(new HttpDelete(normalizePath(path)));
+	}
 
-    protected static abstract class Init<S extends AbstractService, I, B extends Init<S,I,B>> {
+	/**
+	 * Helper method to normalize a supplied path;
+	 * the current implementation only append a '/' if none is present and prefix with API Base
+	 *
+	 * @param path    The path to normalize
+	 * @return        The normalized path
+	 */
+	protected String normalizePath(String path) {
+		if (!path.startsWith("/")) {
+			path = "/" + path;
+		}
+		return apiBase + path;
+	}
 
-        protected S service;
+	/**
+	 * Helper method to normalize a supplied path;
+	 * the current implementation will set scheme, host, port and prefix with pathPrefix if present
+	 *
+	 * @param uriBuilder    The URIBuilder to work upon
+	 * @return              A normalized path with defaults set if necessary
+	 * @throws URISyntaxException   Throw if the URL cannot be built
+	 */
+	protected String normalize(URIBuilder uriBuilder) throws URISyntaxException {
+		if (null == uriBuilder.getHost() || null == uriBuilder.getScheme()) {
+			uriBuilder.setHost(host);
+			uriBuilder.setScheme(scheme);
+			if (null != port) {
+				uriBuilder.setPort(port);
+			}
+			if (null != pathPrefix) {
+				uriBuilder.setPath(pathPrefix + uriBuilder.getPath());
+			}
+		}
+		return uriBuilder.build().toString();
+	}
 
-        protected Init(S service) {
-            this.service = service;
-        }
+	/**
+	 * Enrich a HttpRequest with some default stuff;
+	 * the current implementation does nothing here
+	 *
+	 * @param request    The request to enrich
+	 * @param <T>        Generic method to handle different types of HttpRequests
+	 * @return           The supplied HttpRequest object
+	 */
+	protected <T extends HttpRequestBase> T enrich(T request) {
+		return request;
+	}
 
-        public B withHttpClient(HttpClient httpClient) {
-            service.setHttpClient(httpClient);
-            return self();
-        }
+	/**
+	 * Execute a HttpRequest and handle common response states.
+	 *
+	 * @param request          The HttpRequest to execute
+	 * @param typeReference    The type of the expected response
+	 * @param <T>              Generic method to request different response data
+	 * @return                 The response data for the request
+	 * @throws NotFoundException    This exception is thrown when a resource is not found
+	 */
+	protected <T> T execute(HttpRequestBase request, TypeReference<T> typeReference) throws NotFoundException {
+		try {
+			if (null == request.getHeaders(HttpHeaders.ACCEPT_LANGUAGE)) {
+				request.addHeader(HttpHeaders.ACCEPT_LANGUAGE,defaultDomain.getLocale());
+			}
+			HttpResponse httpResponse = httpClient.execute(request);
+			if (200 == httpResponse.getStatusLine().getStatusCode()) {
+				return objectMapper.readValue(httpResponse.getEntity().getContent(),typeReference);
+			}
 
-        public B withObjectMapper(ObjectMapper objectMapper) {
-            service.setObjectMapper(objectMapper);
-            return self();
-        }
+			if (404 == httpResponse.getStatusLine().getStatusCode()) {
+				throw new NotFoundException(httpResponse.getStatusLine().getReasonPhrase());
+			}
+			else {
+				try{
+					Problem problem = objectMapper.readValue(httpResponse.getEntity().getContent(),Problem.class);
+					throw new RuntimeException("StatusCode: "+problem.getStatus() + ", Reason: " + problem.getDetail());
+				}catch(Exception e){
+					throw new RuntimeException("StatusCode: "+httpResponse.getStatusLine().getStatusCode() + ", Reason: " + httpResponse.getStatusLine().getReasonPhrase());
+				}
 
-        public B withApiBase(String apiBase) {
-            service.setApiBase(apiBase);
-            return self();
-        }
+			}
+		}
+		catch (IOException e) {
+			logger.error(e.getMessage(), e);
+			throw new RuntimeException(e);
+		}
+		finally {
+			if (null != request && !request.isAborted()) {
+				request.abort();
+			}
+		}
+	}
 
-        public B withDefaultDomain(Domain defaultDomain) {
-            service.setDefaultDomain(defaultDomain);
-            return self();
-        }
+	protected static abstract class Init<S extends AbstractService, I, B extends Init<S,I,B>> {
 
-        protected void onBuild() {
-            service.postConstruct();
-        }
+		protected S service;
 
-        protected abstract B self();
+		protected Init(S service) {
+			this.service = service;
+		}
 
-        public abstract I build();
-    }
+		public B withHttpClient(HttpClient httpClient) {
+			service.setHttpClient(httpClient);
+			return self();
+		}
+
+		public B withObjectMapper(ObjectMapper objectMapper) {
+			service.setObjectMapper(objectMapper);
+			return self();
+		}
+
+		public B withApiBase(String apiBase) {
+			service.setApiBase(apiBase);
+			return self();
+		}
+
+		public B withDefaultDomain(Domain defaultDomain) {
+			service.setDefaultDomain(defaultDomain);
+			return self();
+		}
+
+		public B withClientId(String clientId) {
+			service.setClientId(clientId);;
+			return self();
+		}
+
+		public B withClientCredential(String clientCredential) {
+			service.setClientCredential(clientCredential);;
+			return self();
+		}
+
+		protected void onBuild() {
+			service.postConstruct();
+		}
+
+		protected abstract B self();
+
+		public abstract I build();
+	}
 }
